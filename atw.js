@@ -25,3 +25,4 @@ function glslAxis(perspective) {
 	    return perspective;
 	}
 };
+module.exports = glslAxis(percpective);
