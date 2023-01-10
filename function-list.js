@@ -77,9 +77,9 @@ function list(s, t) {
   return ar[s];
 };
 function funcDef(func2, v) {
-  a = [...Array(v).keys()];
+  w = [...Array(v).keys()];
   for (let u = 0; u <= v; u++) {
-    a[v] = func2(v);
+    w[v] = func2(v);
   }
-  return a[v];
+  return w[v];
 };
