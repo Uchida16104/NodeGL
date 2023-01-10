@@ -1,2 +1,2 @@
 # Axis-Transformer-for-WebGL
-It changes perspective axis WebGL for hydra used by Node.js.
+It'll be convenience for hydra used by Node.js.
