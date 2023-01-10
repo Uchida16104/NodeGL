@@ -76,7 +76,7 @@ export function list(s, t) {
   const ar = [sin(), cos(), tan(), asin(), acos(), atan()];
   return ar[s];
 };
-export function funcDef(func2, v) {
+export function varDef(func2, v) {
   w = [...Array(v).keys()];
   for (let u = 0; u <= v; u++) {
     w[v] = func2(v);
