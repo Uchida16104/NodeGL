@@ -76,3 +76,10 @@ function list(s, t) {
   const ar = [sin(), cos(), tan(), asin(), acos(), atan()];
   return ar[s];
 };
+function funcDef(func2, v) {
+  a = [...Array(v).keys()];
+  for (let u = 0; u <= v; u++) {
+    a[v] = func2(v);
+  }
+  return a[v];
+};
