@@ -1,4 +1,4 @@
-export function glslAxis(perspective) {
+function glslAxis(perspective) {
   if (perspective === "x") {
     return "st.x";
   } else if (perspective === "2x") {
@@ -25,7 +25,7 @@ export function glslAxis(perspective) {
     return perspective;
   }
 };
-export function funcAry(init, r, term, step0, step1, func0, func1) {
+function funcAry(init, r, term, step0, step1, func0, func1) {
   let ary = [];
   for (let i = init; i <= r; i += step0) {
     ary.push(func0(i));
@@ -35,7 +35,7 @@ export function funcAry(init, r, term, step0, step1, func0, func1) {
   }
   return ary;
 };
-export function easeInOut(k) {
+function easeInOut(k) {
   const linear = "linear";
   const sine = "sine";
   const easeInOut = "easeInOut";
@@ -66,7 +66,7 @@ export function easeInOut(k) {
   ];
   return array[k];
 };
-export function list(s, t) {
+function list(s, t) {
   let sin = () => Math.sin(time * t);
   let cos = () => Math.cos(time * t);
   let tan = () => Math.tan(time * t);
@@ -76,7 +76,7 @@ export function list(s, t) {
   const ar = [sin(), cos(), tan(), asin(), acos(), atan()];
   return ar[s];
 };
-export function varDef(func2, func3, v) {
+function varDef(func2, func3, v) {
   func2 = [...Array(v).keys()];
   for (let u = 0; u <= v; u++) {
     func2[v] = func3(v);
