@@ -1,2 +1,2 @@
 # NodeBook
-<p>It'll be convenience for hydra used by Node.js.</p>
+<p>It'll be convenience for <a href="https://hydra.ojack.xyz">hydra</a> used by Node.js.</p>
