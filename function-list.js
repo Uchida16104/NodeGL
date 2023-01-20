@@ -83,3 +83,10 @@ function varDef(func2, func3, v) {
   }
   return func2[v];
 };
+function randAry(m,mag){
+  ay=[];
+  for(let l=0; l<=m; l++){
+    ay.push(l);
+  }
+  return ay[Math.floor(Math.random() * ay.length)]*mag;
+}
