@@ -84,7 +84,7 @@ function varDef(func2, func3, v) {
   return func2[v];
 };
 function randAry(m,mag){
-  ay=[];
+  let ay=[];
   for(let l=0; l<=m; l++){
     ay.push(l);
   }
