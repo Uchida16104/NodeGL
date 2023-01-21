@@ -87,6 +87,13 @@ function randAry(m,mag){
   let ay=[];
   for(let l=0; l<=m; l++){
     ay.push(l);
-  }
+  };
   return ay[Math.floor(Math.random() * ay.length)]*mag;
-}
+};
+function genAry(m,mag,rep){
+  let xy=[];
+  for(let z=0; z<=rep; z++){
+    xy.push(randAry(m,mag));
+  };
+  return xy;
+};
