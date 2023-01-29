@@ -27,20 +27,20 @@ function glslAxis(perspective) {
     return perspective;
   }
 };
-function flash(s, t, u) {
-	return solid(glslAxis("x"), glslAxis("y"), () => (time * s))
-		.diff(gradient(t))
-		.colorama(u);
+function flash(fast0, fast1, fast2) {
+	return solid(glslAxis("x"), glslAxis("y"), () => (time * fast0))
+		.diff(gradient(fast1))
+		.colorama(fast2);
 };
-function funcAry(init, r, term, step0, step1, func0, func1) {
-  let ary = [];
-  for (let i = init; i <= r; i += step0) {
-    ary.push(func0(i));
-  }
-  for (let j = r; j <= term; j += step1) {
-    ary.push(func1(j));
-  }
-  return ary;
+function list(s, t) {
+  let sin = () => Math.sin(time * t);
+  let cos = () => Math.cos(time * t);
+  let tan = () => Math.tan(time * t);
+  let asin = () => Math.asin(time * t);
+  let acos = () => Math.acos(time * t);
+  let atan = () => Math.atan(time * t);
+  const ar = [sin(), cos(), tan(), asin(), acos(), atan()];
+  return ar[s];
 };
 function easeInOut(k) {
   const linear = "linear";
@@ -73,22 +73,22 @@ function easeInOut(k) {
   ];
   return array[k];
 };
-function list(s, t) {
-  let sin = () => Math.sin(time * t);
-  let cos = () => Math.cos(time * t);
-  let tan = () => Math.tan(time * t);
-  let asin = () => Math.asin(time * t);
-  let acos = () => Math.acos(time * t);
-  let atan = () => Math.atan(time * t);
-  const ar = [sin(), cos(), tan(), asin(), acos(), atan()];
-  return ar[s];
-};
 function varDef(func2, func3, v) {
   func2 = [...Array(v).keys()];
   for (let u = 0; u <= v; u++) {
     func2[v] = func3(v);
   }
   return func2[v];
+};
+function funcAry(init, r, term, step0, step1, func0, func1) {
+  let ary = [];
+  for (let i = init; i <= r; i += step0) {
+    ary.push(func0(i));
+  }
+  for (let j = r; j <= term; j += step1) {
+    ary.push(func1(j));
+  }
+  return ary;
 };
 function randAry(m,mag){
   let ay=[];
