@@ -1,6 +1,8 @@
 function glslAxis(perspective) {
   if (perspective === "x") {
     return "st.x";
+  } else if (perspective === "y") {
+    return "st.y";
   } else if (perspective === "2x") {
     return "st.x+st.x";
   } else if (perspective === "pow(x,2)") {
@@ -24,6 +26,11 @@ function glslAxis(perspective) {
   } else {
     return perspective;
   }
+};
+function flash(s, t, u) {
+	return solid(glslAxis("x"), glslAxis("y"), () => (time * s))
+		.diff(gradient(t))
+		.colorama(u);
 };
 function funcAry(init, r, term, step0, step1, func0, func1) {
   let ary = [];
