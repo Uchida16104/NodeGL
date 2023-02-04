@@ -27,8 +27,9 @@ flash(1,2,1).diff(osc(30,1/8,300).diff(osc(30,1/8,300).rotate(Math.PI/2))).scale
 <address><p>By Hirotoshi Uchida<br><a href="https://hearthis.at/hirotoshi-uchida-2nd/">hearthis.at</a><br><a href="https://www.instagram.com/hirotoshiuchida/">IG</a></p></address>
 <details>
   <summary>Information</summary>
-  <h2>First commited as "NodeBook".</h2>
-  <p>on Jan 19th, 2023</p>
-  <h2>Released the newest.</h2>
-  <p>on Feb 4th, 2023</p>
+  <h2>First commited as "NodeBook"</h2>
+  <p>on Jan 19th, 2023.</p>
+  <h2>Released the newest</h2>
+  <p>on Feb 4th, 2023.</p>
+  <h6><a href="https://github.com/Uchida16104/NodeGL/commits/main/README.md">Show more</a></h6>
 </details>
