@@ -28,6 +28,8 @@
 <br>noise().out(o1);
 <br>gradient(1).out(o2);
 <br>voronoi().out(o3);</a></code></li></ul>
+<li><h5>Others(element,rbga,and hsb)</h5></li>
+  <ul><li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTNCJTBBZWxlbWVudCgxMCUyQ28wJTJDNCUyQzAlMkMxKS5kaWZmKG9zYygxJTJDMiUyQzMwMCkuZGlmZihncmFkaWVudCgxKSkuc2NhbGUoLjEpKS5kaWZmKHJnYmEobzAlMkMxJTJDMSUyQzElMkMxKSkuZGlmZihoc2IobzAlMkMxJTJDMSUyQzElMkY0KSkuaW52ZXJ0KCkub3V0KCk%3D">element(10,o0,4,0,1).diff(osc(1,2,300).diff(gradient(1)).scale(.1)).diff(rgba(o0,1,1,1,1)).diff(hsb(o0,1,1,1/4)).invert().out();</a></code></li></ul>
 </ol>
 <address>
   <p>By Hirotoshi Uchida
