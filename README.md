@@ -23,3 +23,5 @@ flash(1,2,1).diff(osc(30,1/8,300).diff(osc(30,1/8,300).rotate(Math.PI/2))).scale
 <li><h5>It can generate an array from 0 to a specified number, repeatedly output a random value, and store it in the array again.</h5></li>
   <ul><li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTNCJTBBc2hhcGUoZ2VuQXJ5KDEwMCUyQzAuMSUyQzEwKS5zbW9vdGgoKSkub3V0KCklM0I%3D">shape(genAry(100,0.1,10).smooth()).out();</a></code></li></ul>
 </ol>
+<br>
+<address><p>By Hirotoshi Uchida<br><a href="https://hearthis.at/hirotoshi-uchida-2nd/">hearthis.at</a><br><a href="https://www.instagram.com/hirotoshiuchida/">IG</a></p></address>
