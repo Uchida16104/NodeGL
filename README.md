@@ -1,5 +1,6 @@
 # NodeGL
 <p>It'll be convenience for <a href="https://hydra.ojack.xyz">hydra</a> used by Node.js.</p>
 <br>
-<h1>Usage</h1>
-<code>osc().scale(glslAxis("2y")).out();</code>
+<ul><h1>Usage</h1></ul>
+<ol>When you'd like to change the canvas axis to "y".</ol>
+  <li><code>osc().scale(glslAxis("y")).out();</code></li>
