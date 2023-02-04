@@ -3,7 +3,7 @@
 <br>
 <ul><h1>Usage</h1></ul>
 <h3>First, please use the following code to read on hydra.</h3>
-<code>await loadScript("https://nodegl.glitch.me/function-list.js");</code>
+<code>await loadScript("<a href="https://nodegl.glitch.me/function-list.js">https://nodegl.glitch.me/function-list.js</a>");</code>
 <ol><li><h5>When you'd like to change the canvas axis to "y" perspective.</h5></li>
   <ul><li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTNCJTBBb3NjKCkuc2NhbGUoZ2xzbEF4aXMoJTIyeSUyMikpLm91dCgpJTNC">osc().scale(glslAxis("y")).out();</a></code></li></ul>
   <ul><li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTNCJTBBdm9yb25vaSgyMCUyQzElMkM1KS5zY2FsZShnbHNsQXhpcyglMjIyeSUyMikpLm91dCgpJTNC">voronoi(20,1,5).scale(glslAxis("2y")).out();</a></code></li></ul>
