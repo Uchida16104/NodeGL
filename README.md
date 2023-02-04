@@ -2,7 +2,7 @@
 <p>It'll be convenience for <a href="https://hydra.ojack.xyz">hydra</a> used by Node.js.</p>
 <br>
 <ul><h1>Usage</h1></ul>
-<h3>First, please use the following code to read.</h3>
+<h3>First, please use the following code to read on hydra.</h3>
 <code>await loadScript("https://nodegl.glitch.me/function-list.js");</code>
 <ol><li><h5>When you'd like to change the canvas axis to "y" perspective.</h5></li>
   <ul><li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTNCJTBBb3NjKCkuc2NhbGUoZ2xzbEF4aXMoJTIyeSUyMikpLm91dCgpJTNC">osc().scale(glslAxis("y")).out();</a></code></li></ul>
