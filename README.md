@@ -10,5 +10,5 @@
 </ol>
 <ol><h5>It can be modulated using the difference between "solid" and "gradient" color changes.</h5>
   <li><code>speed=1/4;<br>
-flash(1,2,1).diff(osc(30,1/8,300).diff(osc(30,1/8,300).rotate(Math.PI/2))).scale([1/4,1/2].smooth()).out();</code></li>
+ flash(1,2,1).diff(osc(30,1/8,300).diff(osc(30,1/8,300).rotate(Math.PI/2))).scale([1/4,1/2].smooth()).out();</code></li>
   </ol>
