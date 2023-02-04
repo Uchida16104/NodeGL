@@ -9,11 +9,13 @@
   <li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTNCJTBBb3NjKCkuc2NhbGUoZ2xzbEF4aXMoJTIyeSUyMikpLm91dCgpJTNC">osc().scale(glslAxis("y")).out();</a></code></li>
   <li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTNCJTBBdm9yb25vaSgyMCUyQzElMkM1KS5zY2FsZShnbHNsQXhpcyglMjIyeSUyMikpLm91dCgpJTNC">voronoi(20,1,5).scale(glslAxis("2y")).out();</a></code></li>
 </ol>
-<ol><h5>It can be modulated using the difference between "solid" and "gradient" color changes.</h5>
+<ul>
+<ol><li><h5>It can be modulated using the difference between "solid" and "gradient" color changes.</h5></li></ul>
   <li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTNCJTBBc3BlZWQlM0QxJTJGNCUzQiUwQWZsYXNoKDElMkMyJTJDMSkuZGlmZihvc2MoMzAlMkMxJTJGOCUyQzMwMCkuZGlmZihvc2MoMzAlMkMxJTJGOCUyQzMwMCkucm90YXRlKE1hdGguUEklMkYyKSkpLnNjYWxlKCU1QjElMkY0JTJDMSUyRjIlNUQuc21vb3RoKCkpLm91dCgpJTNC">speed=1/4;<br>
 flash(1,2,1).diff(osc(30,1/8,300).diff(osc(30,1/8,300).rotate(Math.PI/2))).scale([1/4,1/2].smooth()).out();</a></code></li>
 </ol>
-<ol><h5>You can also use functions that store trigonometric and inverse trigonometric functions to change the video.</h5>
+<ul>
+<ol><li><h5>You can also use functions that store trigonometric and inverse trigonometric functions to change the video.</h5></li></ul>
   <li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTNCJTBBbm9pc2UoKS5yb3RhdGUoKCklM0QlM0VsaXN0KDElMkMyKSkub3V0KCklM0I%3D">noise().rotate(()=>list(1,2)).out();</a></code></li>
 </ol>
 <ol><h5>The options available within hydra's "ease" function can also be easily specified.</h5>
