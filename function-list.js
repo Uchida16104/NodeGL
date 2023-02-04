@@ -127,3 +127,12 @@ function setLoop(speed0, speed1, speed2, speed3, ms) {
     }
   }, ms);
 }
+function element(amount,output,form,inside,outside){ 
+  return solid().diff(src(output).pixelate(amount,amount).mult(shape(form,inside,outside).repeat(amount,amount).invert()).diff(src(output).scale(.99).diff(src(output).scale(1.01))));
+}
+function rgba(output,red,green,blue,alpha){
+  return src(output).r(red).g(green).b(blue).a(alpha);
+}
+function hsb(output,hue,saturation,bright){
+  return src(output).hue(hue).saturate(saturation).brightness(bright);
+}
