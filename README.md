@@ -19,7 +19,7 @@ flash(1,2,1).diff(osc(30,1/8,300).diff(osc(30,1/8,300).rotate(Math.PI/2))).scale
   <li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTNCJTBBZ3JhZGllbnQoMSkuaHVlKCU1QjAlMkMxJTVELmVhc2UoZWFzZUluT3V0KDUpKSkub3V0KCklM0I%3D">gradient(1).hue([0,1].ease(easeInOut(5))).out();</a></code></li>
 </ol>
 <ol><h5>Variables can be defined sequentially and the last variable among them can be used. (It can also be used outside of hydra.)</h5>
-  <li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTNCJTBBb3NjKCkucm90YXRlKHZhckRlZiglMjJoeWRyYSUyMiUyQ01hdGguYXRhbiUyQzEwKSkub3V0KCklM0I%3D">osc().rotate(varDef("hydra",Math.atan,10)).out();</a></code><li>
+  <li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTNCJTBBb3NjKCkucm90YXRlKHZhckRlZiglMjJoeWRyYSUyMiUyQ01hdGguYXRhbiUyQzEwKSkub3V0KCklM0I%3D">osc().rotate(varDef("hydra",Math.atan,10)).out();</a></code></li>
 </ol>
 <ol><h5>Two different functions can be entered, each increasing in a different step, and the results put into an array and modulated.</h5>
   <li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTNCJTBBc2hhcGUoZnVuY0FyeSg0JTJDNSUyQzYlMkMwLjA1JTJDMC4xJTJDTWF0aC50YW4lMkNNYXRoLnNpbikuc21vb3RoKCkpLm91dCgpJTNC">shape(funcAry(4,5,6,0.05,0.1,Math.tan,Math.sin).smooth()).out();</a></code></li>
