@@ -29,9 +29,11 @@ flash(1,2,1).diff(osc(30,1/8,300).diff(osc(30,1/8,300).rotate(Math.PI/2))).scale
     <br>gradient(1).out(o2);
     <br>voronoi().out(o3);</code></a></li></ul>
 </ol>
-<address><p>By Hirotoshi Uchida
+<address>
+  <p>By Hirotoshi Uchida
   <br><a href="https://hearthis.at/hirotoshi-uchida-2nd/">hearthis.at</a>
-  <br><a href="https://www.instagram.com/hirotoshiuchida/">IG</a></p></address>
+  <br><a href="https://www.instagram.com/hirotoshiuchida/">IG</a></p>
+</address>
 <details>
   <summary>Log</summary>
   <h2>First commited as "NodeBook"</h2>
