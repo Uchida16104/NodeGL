@@ -5,7 +5,7 @@
 <h3>First, please use the following code to read.</h3>
 <code>await loadScript("https://nodegl.glitch.me/function-list.js");</code>
 <ol><li><h5>When you'd like to change the canvas axis to "y" perspective.</h5></li>
-  <ul><li><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTNCJTBBb3NjKCkuc2NhbGUoZ2xzbEF4aXMoJTIyeSUyMikpLm91dCgpJTNC"><code>osc().scale(glslAxis("y")).out();</code></a></li></ul>
+  <ul><li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTNCJTBBb3NjKCkuc2NhbGUoZ2xzbEF4aXMoJTIyeSUyMikpLm91dCgpJTNC">osc().scale(glslAxis("y")).out();</a></code></li></ul>
   <ul><li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTNCJTBBdm9yb25vaSgyMCUyQzElMkM1KS5zY2FsZShnbHNsQXhpcyglMjIyeSUyMikpLm91dCgpJTNC">voronoi(20,1,5).scale(glslAxis("2y")).out();</a></code></li></ul>
 <li><h5>It can be modulated using the difference between "solid" and "gradient" color changes.</h5></li>
   <ul><li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTNCJTBBc3BlZWQlM0QxJTJGNCUzQiUwQWZsYXNoKDElMkMyJTJDMSkuZGlmZihvc2MoMzAlMkMxJTJGOCUyQzMwMCkuZGlmZihvc2MoMzAlMkMxJTJGOCUyQzMwMCkucm90YXRlKE1hdGguUEklMkYyKSkpLnNjYWxlKCU1QjElMkY0JTJDMSUyRjIlNUQuc21vb3RoKCkpLm91dCgpJTNC">speed=1/4;<br>
