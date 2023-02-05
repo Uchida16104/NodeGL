@@ -26,12 +26,12 @@ function glslAxis(perspective) {
   } else {
     return perspective;
   }
-};
+}
 function flash(fast0, fast1, fast2) {
-	return solid(glslAxis("x"), glslAxis("y"), () => (time * fast0))
-		.diff(gradient(fast1))
-		.colorama(fast2);
-};
+  return solid(glslAxis("x"), glslAxis("y"), () => time * fast0)
+    .diff(gradient(fast1))
+    .colorama(fast2);
+}
 function list(s, t) {
   let sin = () => Math.sin(time * t);
   let cos = () => Math.cos(time * t);
@@ -41,7 +41,7 @@ function list(s, t) {
   let atan = () => Math.atan(time * t);
   const ar = [sin(), cos(), tan(), asin(), acos(), atan()];
   return ar[s];
-};
+}
 function easeInOut(k) {
   const linear = "linear";
   const sine = "sine";
@@ -72,14 +72,14 @@ function easeInOut(k) {
     easeInOutBounce,
   ];
   return array[k];
-};
+}
 function varDef(func2, func3, v) {
   func2 = [...Array(v).keys()];
   for (let u = 0; u <= v; u++) {
     func2[v] = func3(v);
   }
   return func2[v];
-};
+}
 function funcAry(init, r, term, step0, step1, func0, func1) {
   let ary = [];
   for (let i = init; i <= r; i += step0) {
@@ -89,21 +89,21 @@ function funcAry(init, r, term, step0, step1, func0, func1) {
     ary.push(func1(j));
   }
   return ary;
-};
-function randAry(m,mag){
-  let ay=[];
-  for(let l=0; l<=m; l++){
+}
+function randAry(m, mag) {
+  let ay = [];
+  for (let l = 0; l <= m; l++) {
     ay.push(l);
-  };
-  return ay[Math.floor(Math.random() * ay.length)]*mag;
-};
-function genAry(m,mag,rep){
-  let xy=[];
-  for(let z=0; z<=rep; z++){
-    xy.push(randAry(m,mag));
-  };
+  }
+  return ay[Math.floor(Math.random() * ay.length)] * mag;
+}
+function genAry(m, mag, rep) {
+  let xy = [];
+  for (let z = 0; z <= rep; z++) {
+    xy.push(randAry(m, mag));
+  }
   return xy;
-};
+}
 function setLoop(speed0, speed1, speed2, speed3, ms) {
   let count = 0;
   let o = [o0, o1, o2, o3];
@@ -127,12 +127,34 @@ function setLoop(speed0, speed1, speed2, speed3, ms) {
     }
   }, ms);
 }
-function element(amount,output,form,inside,outside){ 
-  return solid().diff(src(output).pixelate(amount,amount).mult(shape(form,inside,outside).repeat(amount,amount).invert()).diff(src(output).scale(.99).diff(src(output).scale(1.01))));
+function pad(amount, output, form, inside, outside, breath) {
+  return solid().diff(
+    src(output)
+      .pixelate(amount, amount)
+      .mult(shape(form, inside, outside).repeat(amount, amount).invert())
+      .diff(
+        src(output)
+          .scale(breath)
+          .diff(src(output).scale(2 - breath))
+      )
+  );
 }
-function rgba(output,red,green,blue,alpha){
+function particle(output, breath) {
+  return solid().diff(
+    src(output)
+      .scale(breath)
+      .diff(src(output).scale(2 - breath))
+  );
+}
+function rgba(output, red, green, blue, alpha) {
   return src(output).r(red).g(green).b(blue).a(alpha);
 }
-function hsb(output,hue,saturation,bright){
+function hsb(output, hue, saturation, bright) {
   return src(output).hue(hue).saturate(saturation).brightness(bright);
+}
+function zebra(video, timesY, timesX, func4, speed4) {
+  synth = () => video;
+  return synth().modulateRepeatY(shape(2).repeatY(timesY), timesX, () =>
+    func4(time * speed4)
+  );
 }
