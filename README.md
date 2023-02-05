@@ -34,6 +34,7 @@
   <li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTBBczAuaW5pdENhbSgpJTNCJTBBc29saWQoKS5hZGQoemVicmEoc3JjKHMwKSUyQyUyMDIlMkMlMjA0JTJDJTIwTWF0aC5zaW4lMkMlMjAwLjEpKS5vdXQoKSUzQg%3D%3D">s0.initCam();
 <br>solid().add(zebra(src(s0), 2, 4, Math.sin, 0.1)).out();</a></code></li></ul>
 </ol>
+<p>Click <a href="https://raw.githubusercontent.com/Uchida16104/NodeGL/main/function-list.js">here</a> for more information.</p>
 <address>
   <p>By Hirotoshi Uchida
   <br><a href="https://hearthis.at/hirotoshi-uchida-2nd/">hearthis.at</a>
