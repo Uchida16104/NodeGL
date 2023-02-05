@@ -31,7 +31,8 @@
 <li><h5>Others(pad,particle,rbga,hsb,and zebra)</h5></li>
   <ul><li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTBBcGFkKDEwJTJDbzAlMkM0JTJDMCUyQzElMkMuOTkpLmRpZmYob3NjKDElMkMyJTJDMzAwKS5kaWZmKGdyYWRpZW50KDEpKS5zY2FsZSguMSkpLmRpZmYocmdiYShvMCUyQzElMkMxJTJDMSUyQzEpKS5kaWZmKGhzYihvMCUyQzElMkMxJTJDMSUyRjQpKS5pbnZlcnQoKS5vdXQoKSUzQg%3D%3D">pad(10,o0,4,0,1,.99).diff(osc(1,2,300).diff(gradient(1)).scale(.1)).diff(rgba(o0,1,1,1,1)).diff(hsb(o0,1,1,1/4)).invert().out();</a></code></li>
   <li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTBBb3NjKDElMkMyJTJDMzAwKS5kaWZmKGdyYWRpZW50KDEpKS5zY2FsZSguMSkuZGlmZihwYXJ0aWNsZShvMCUyQy45OSkpLmludmVydCgpLm91dCgpJTNC">osc(1,2,300).diff(gradient(1)).scale(.1).diff(particle(o0,.99)).invert().out();</a></code></li>
-  <li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTBBczAuaW5pdENhbSgpJTNCJTBBc29saWQoKS5hZGQoemVicmEoc3JjKHMwKSUyQyUyMDIlMkMlMjA0JTJDJTIwTWF0aC5zaW4lMkMlMjAwLjEpKS5vdXQoKSUzQg%3D%3D">s0.initCam();<br>solid().add(zebra(src(s0), 2, 4, Math.sin, 0.1)).out();</a></code></li></ul>
+  <li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTBBczAuaW5pdENhbSgpJTNCJTBBc29saWQoKS5hZGQoemVicmEoc3JjKHMwKSUyQyUyMDIlMkMlMjA0JTJDJTIwTWF0aC5zaW4lMkMlMjAwLjEpKS5vdXQoKSUzQg%3D%3D">s0.initCam();
+    <br>solid().add(zebra(src(s0), 2, 4, Math.sin, 0.1)).out();</a></code></li></ul>
 </ol>
 <address>
   <p>By Hirotoshi Uchida
