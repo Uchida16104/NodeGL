@@ -35,6 +35,7 @@
 <br>solid().add(zebra(src(s0), 2, 4, Math.sin, 0.1)).out();</a></code></li></ul>
 </ol>
 <p>Click <a href="https://raw.githubusercontent.com/Uchida16104/NodeGL/main/function-list.js">here</a> for more information.</p>
+<p>I appreciate all hydra users or developers on <a href="https://github.com/hydra-synth">GitHub</a>, <a href="https://www.facebook.com/groups/1084288351771117/">FB</a>, <a href="https://twitter.com/hydra_patterns">Twitter</a> or <a href="https://discord.gg/Mv9kXwtwVH">Discord</a>
 <address>
   <p>By Hirotoshi Uchida
   <br><a href="https://hearthis.at/hirotoshi-uchida-2nd/">hearthis.at</a>
