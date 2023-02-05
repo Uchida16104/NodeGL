@@ -1,7 +1,7 @@
 # NodeGL
 <p>It'll be convenience for <a href="https://hydra.ojack.xyz">hydra</a> used by Node.js.</p>
 <br>
-<ul><h2>Usage</h2></ul>
+<ul><h1>Usage</h1></ul>
 <h3>First, please use the following code to read on hydra.</h3>
 <code>await loadScript("<a href="https://nodegl.glitch.me/function-list.js">https://nodegl.glitch.me/function-list.js</a>");</code>
 <ol><li><h5>When you'd like to change the canvas axis to "y" perspective.</h5></li>
