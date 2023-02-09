@@ -33,9 +33,9 @@
 <p>Click <a href="https://nodegl.glitch.me/function-list.js">here</a> for more information.</p>
 <p>I appreciate all hydra users or developers on <a href="https://github.com/hydra-synth">GitHub</a>, <a href="https://www.facebook.com/groups/1084288351771117/">FB</a>, <a href="https://twitter.com/hydra_patterns">Twitter</a> or <a href="https://discord.gg/Mv9kXwtwVH">Discord</a>, etc...</p>
 <p>By Hirotoshi Uchida<br><a href="https://hearthis.at/hirotoshi-uchida-2nd/">hearthis.at</a><br><a href="https://www.instagram.com/hirotoshiuchida/">IG</a></p>
-<h1>Log</h1>
+<details><summary><h1>Log</h1></summary>
 <h2>First commited as "NodeBook"</h2>
 <p>on Jan 19th, 2023.</p>
 <h2>Released the newest</h2>
 <p>on Feb 5th, 2023.</p>
-<h6><a href="https://github.com/Uchida16104/NodeGL/commits/main/README.md">Show more</a></h6>
+<h6><a href="https://github.com/Uchida16104/NodeGL/commits/main/README.md">Show more</a></h6></details>
