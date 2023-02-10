@@ -106,24 +106,18 @@ function genAry(m, mag, rep) {
 }
 function setLoop(speed0, speed1, speed2, speed3, ms) {
   let count = 0;
+  let sf = [speed0, speed1, speed2, speed3];
   let o = [o0, o1, o2, o3];
   const countUp = () => {
     count++;
   };
   const intervalId = setInterval(() => {
     countUp();
-    if (count % o.length == 0) {
-      speed = speed0;
-      render(o[0]);
-    } else if (count % o.length == 1) {
-      speed = speed1;
-      render(o[1]);
-    } else if (count % o.length == 2) {
-      speed = speed2;
-      render(o[2]);
-    } else if (count % o.length == 3) {
-      speed = speed3;
-      render(o[3]);
+    for (let i = 0; i < o.length; i++) {
+      if (count % o.length == i) {
+        speed = sf[i];
+        render(o[i]);
+      }
     }
   }, ms);
 }
