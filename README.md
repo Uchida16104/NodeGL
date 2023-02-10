@@ -37,5 +37,5 @@
 <h2>First commited as "NodeBook"</h2>
 <p>on Jan 19th, 2023.</p>
 <h2>Released the newest</h2>
-<p>on Feb 5th, 2023.</p>
+<p>on Feb 10th, 2023.</p>
 <h6><a href="https://github.com/Uchida16104/NodeGL/commits/main/README.md">Show more</a></h6></details>
