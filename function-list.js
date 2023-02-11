@@ -1,4 +1,4 @@
-function glslAxis(perspective) {
+function glslAxis(perspective = "1.0") {
   if (perspective === "x") {
     return "st.x";
   } else if (perspective === "y") {
@@ -27,12 +27,12 @@ function glslAxis(perspective) {
     return perspective;
   }
 }
-function flash(fast0, fast1, fast2) {
+function flash(fast0 = 1, fast1 = 1, fast2 = 0.01) {
   return solid(glslAxis("x"), glslAxis("y"), () => time * fast0)
     .diff(gradient(fast1))
     .colorama(fast2);
 }
-function list(s, t) {
+function list(s = 0, t = 1) {
   let sin = () => Math.sin(time * t);
   let cos = () => Math.cos(time * t);
   let tan = () => Math.tan(time * t);
@@ -42,7 +42,7 @@ function list(s, t) {
   const ar = [sin(), cos(), tan(), asin(), acos(), atan()];
   return ar[s];
 }
-function easeInOut(k) {
+function easeInOut(k = 0) {
   const linear = "linear";
   const sine = "sine";
   const easeInOut = "easeInOut";
@@ -73,14 +73,22 @@ function easeInOut(k) {
   ];
   return array[k];
 }
-function varDef(func2, func3, v) {
+function varDef(func2 = "hydra", func3 = Math.sin, v = 10) {
   func2 = [...Array(v).keys()];
   for (let u = 0; u <= v; u++) {
     func2[v] = func3(v);
   }
   return func2[v];
 }
-function funcAry(init, r, term, step0, step1, func0, func1) {
+function funcAry(
+  init = 0,
+  r = 0.5,
+  term = 1,
+  step0 = 0.01,
+  step1 = 0.1,
+  func0 = Math.sin,
+  func1 = Math.cos
+) {
   let ary = [];
   for (let i = init; i <= r; i += step0) {
     ary.push(func0(i));
@@ -90,21 +98,21 @@ function funcAry(init, r, term, step0, step1, func0, func1) {
   }
   return ary;
 }
-function randAry(m, mag) {
+function randAry(m = 100, mag = 0.01) {
   let ay = [];
   for (let l = 0; l <= m; l++) {
     ay.push(l);
   }
   return ay[Math.floor(Math.random() * ay.length)] * mag;
 }
-function genAry(m, mag, rep) {
+function genAry(m = 100, mag = 0.01, rep = 10) {
   let xy = [];
   for (let z = 0; z <= rep; z++) {
     xy.push(randAry(m, mag));
   }
   return xy;
 }
-function setLoop(speed0, speed1, speed2, speed3, ms) {
+function setLoop(speed0 = 1, speed1 = 1, speed2 = 1, speed3 = 1, ms = 1000) {
   let count = 0;
   let sf = [speed0, speed1, speed2, speed3];
   let o = [o0, o1, o2, o3];
@@ -121,7 +129,14 @@ function setLoop(speed0, speed1, speed2, speed3, ms) {
     }
   }, ms);
 }
-function pad(amount, output, form, inside, outside, breath) {
+function pad(
+  amount = 10,
+  output = o0,
+  form = 4,
+  inside = 0,
+  outside = 1,
+  breath = 0.99
+) {
   return solid().diff(
     src(output)
       .pixelate(amount, amount)
@@ -133,20 +148,26 @@ function pad(amount, output, form, inside, outside, breath) {
       )
   );
 }
-function particle(output, breath) {
+function particle(output = o0, breath = 0.99) {
   return solid().diff(
     src(output)
       .scale(breath)
       .diff(src(output).scale(2 - breath))
   );
 }
-function rgba(output, red, green, blue, alpha) {
+function rgba(output = o0, red = 0, green = 0, blue = 0, alpha = 1) {
   return src(output).r(red).g(green).b(blue).a(alpha);
 }
-function hsb(output, hue, saturation, bright) {
+function hsb(output = o0, hue = 0.5, saturation = 0.5, bright = 0.5) {
   return src(output).hue(hue).saturate(saturation).brightness(bright);
 }
-function zebra(video, timesY, timesX, func4, speed4) {
+function zebra(
+  video = src(o0),
+  timesY = 1,
+  timesX = 1,
+  func4 = Math.sin,
+  speed4 = 0.1
+) {
   synth = () => video;
   return synth().modulateRepeatY(shape(2).repeatY(timesY), timesX, () =>
     func4(time * speed4)
