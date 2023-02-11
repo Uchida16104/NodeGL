@@ -23,11 +23,16 @@
 <li><h5>It can generate an array from 0 to a specified number, repeatedly output a random value, and store it in the array again.</h5></li>
 <ul><li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTNCJTBBc2hhcGUoZ2VuQXJ5KDEwMCUyQzAuMSUyQzEwKS5zbW9vdGgoKSkub3V0KCklM0I%3D">shape(genAry(100,0.1,10).smooth()).out();</a></code></li></ul>
 <li><h5>Four output videos can be looped and switched every specified number of seconds at specified speeds.</h5></li>
-<ul><li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTNCJTBBc2V0TG9vcCgxJTJGMiUyQy0xJTJGNCUyQy0xJTJGMiUyQzElMkY0JTJDMTAwMCklM0IlMEFvc2MoKS5vdXQoKSUzQiUwQW5vaXNlKCkub3V0KG8xKSUzQiUwQWdyYWRpZW50KDEpLm91dChvMiklM0IlMEF2b3Jvbm9pKCkub3V0KG8zKSUzQg%3D%3D">setLoop(1/2,-1/4,-1/2,1/4,1000);<br>osc().out();<br>noise().out(o1);<br>gradient(1).out(o2);<br>voronoi().out(o3);</a></code></li></ul>
+<ul><li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTNCJTBBc2V0TG9vcCgxJTJGMiUyQy0xJTJGNCUyQy0xJTJGMiUyQzElMkY0JTJDMTAwMCklM0IlMEFvc2MoKS5vdXQoKSUzQiUwQW5vaXNlKCkub3V0KG8xKSUzQiUwQWdyYWRpZW50KDEpLm91dChvMiklM0IlMEF2b3Jvbm9pKCkub3V0KG8zKSUzQg%3D%3D">setLoop(1/2,-1/4,-1/2,1/4,1000);
+<br>osc().out();
+<br>noise().out(o1);
+<br>gradient(1).out(o2);
+<br>voronoi().out(o3);</a></code></li></ul>
 <li><h5>Others(pad,particle,rbga,hsb,and zebra)</h5></li>
 <ul><li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTBBcGFkKDEwJTJDbzAlMkM0JTJDMCUyQzElMkMuOTkpLmRpZmYob3NjKDElMkMyJTJDMzAwKS5kaWZmKGdyYWRpZW50KDEpKS5zY2FsZSguMSkpLmRpZmYocmdiYShvMCUyQzElMkMxJTJDMSUyQzEpKS5kaWZmKGhzYihvMCUyQzElMkMxJTJDMSUyRjQpKS5pbnZlcnQoKS5vdXQoKSUzQg%3D%3D">pad(10,o0,4,0,1,.99).diff(osc(1,2,300).diff(gradient(1)).scale(.1)).diff(rgba(o0,1,1,1,1)).diff(hsb(o0,1,1,1/4)).invert().out();</a></code></li>
 <li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTBBb3NjKDElMkMyJTJDMzAwKS5kaWZmKGdyYWRpZW50KDEpKS5zY2FsZSguMSkuZGlmZihwYXJ0aWNsZShvMCUyQy45OSkpLmludmVydCgpLm91dCgpJTNC">osc(1,2,300).diff(gradient(1)).scale(.1).diff(particle(o0,.99)).invert().out();</a></code></li>
-<li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTBBczAuaW5pdENhbSgpJTNCJTBBc29saWQoKS5hZGQoemVicmEoc3JjKHMwKSUyQyUyMDIlMkMlMjA0JTJDJTIwTWF0aC5zaW4lMkMlMjAwLjEpKS5vdXQoKSUzQg%3D%3D">s0.initCam();<br>solid().add(zebra(src(s0), 2, 4, Math.sin, 0.1)).out();</a></code></li></ul>
+<li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTBBczAuaW5pdENhbSgpJTNCJTBBc29saWQoKS5hZGQoemVicmEoc3JjKHMwKSUyQyUyMDIlMkMlMjA0JTJDJTIwTWF0aC5zaW4lMkMlMjAwLjEpKS5vdXQoKSUzQg%3D%3D">s0.initCam();
+<br>solid().add(zebra(src(s0), 2, 4, Math.sin, 0.1)).out();</a></code></li></ul>
 </ol>
 <br>
 <p>Click <a href="https://nodegl.glitch.me/function-list.js">here</a> for more information.</p>
