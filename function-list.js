@@ -173,3 +173,21 @@ function zebra(
     func4(time * speed4)
   );
 }
+function form(n=4, k=2,n0=0,n1=1,o=60,p=1/8,q=300) {
+	if (n % 2 === 1) {
+		return osc(o,p,q)
+			.kaleid(n)
+			.rotate(Math.PI / 2)
+			.mult(shape(n,n0,n1));
+	} else if (n % Math.pow(2, k) === 0) {
+		return osc(o,p,q)
+			.kaleid(Math.pow(2, k))
+			.rotate(Math.PI / Math.pow(2, k))
+			.mult(shape(Math.pow(2, k)));
+	} else if (n % 2 === 0) {
+		return osc()
+			.kaleid(n)
+			.rotate(Math.PI)
+			.mult(shape(n,n0,n1));
+	}
+}
