@@ -5,6 +5,8 @@ function glslAxis(perspective = "1.0") {
     return "st.y";
   } else if (perspective === "2x") {
     return "st.x*2.0";
+  } else if (perspective === "x/2") {
+    return "st.x/2.0";
   } else if (perspective === "pow(x,2)") {
     return "pow(st.x,2.0)";
   } else if (perspective === "x+y") {
@@ -21,6 +23,8 @@ function glslAxis(perspective = "1.0") {
     return "st.y/st.x";
   } else if (perspective === "2y") {
     return "st.y*2.0";
+  } else if (perspective === "y/2") {
+    return "st.y/2.0";
   } else if (perspective === "pow(y,2)") {
     return "pow(st.y,2.0)";
   } else {
