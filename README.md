@@ -29,9 +29,10 @@
 <br>noise().out(o1);
 <br>gradient(1).out(o2);
 <br>voronoi().out(o3);</a></code></li></ul>
-<li><h5>Others(form,pad,particle,rbga,hsb,and zebra)</h5></li>
+<li><h5>Others(form, pad, particle, rbga, hsb, rainbow and zebra)</h5></li>
 <ul><li><code><a href="https://hydra.ojack.xyz/?sketch_id=Y27ApIAcbfmAlojw">form(4,2,0,1,15,1/8,0).colorama(3).luma().hue(()=>Math.sin(time/10),()=>Math.cos(time/10),()=>Math.tan(time/10)).diff(gradient(1)).invert().scale(Math.PI).repeat().out();</a></code></li>
 <li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTBBcGFkKDEwJTJDbzAlMkM0JTJDMCUyQzElMkMuOTkpLmRpZmYob3NjKDElMkMyJTJDMzAwKS5kaWZmKGdyYWRpZW50KDEpKS5zY2FsZSguMSkpLmRpZmYocmdiYShvMCUyQzElMkMxJTJDMSUyQzEpKS5kaWZmKGhzYihvMCUyQzElMkMxJTJDMSUyRjQpKS5pbnZlcnQoKS5vdXQoKSUzQg%3D%3D">pad(10,o0,4,0,1,.99).diff(osc(1,2,300).diff(gradient(1)).scale(.1)).diff(rgba(o0,1,1,1,1)).diff(hsb(o0,1,1,1/4)).invert().out();</a></code></li>
+<li><code><a href="https://hydra.ojack.xyz/?sketch_id=N31iJkJbyMGUnAOT">gradient().blend(rainbow(3)).out();</a></code></li>
 <li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTBBb3NjKDElMkMyJTJDMzAwKS5kaWZmKGdyYWRpZW50KDEpKS5zY2FsZSguMSkuZGlmZihwYXJ0aWNsZShvMCUyQy45OSkpLmludmVydCgpLm91dCgpJTNC">osc(1,2,300).diff(gradient(1)).scale(.1).diff(particle(o0,.99)).invert().out();</a></code></li>
 <li><code><a href="https://hydra.ojack.xyz/?code=YXdhaXQlMjBsb2FkU2NyaXB0KCUyMmh0dHBzJTNBJTJGJTJGbm9kZWdsLmdsaXRjaC5tZSUyRmZ1bmN0aW9uLWxpc3QuanMlMjIpJTBBczAuaW5pdENhbSgpJTNCJTBBc29saWQoKS5hZGQoemVicmEoc3JjKHMwKSUyQyUyMDIlMkMlMjA0JTJDJTIwTWF0aC5zaW4lMkMlMjAwLjEpKS5vdXQoKSUzQg%3D%3D">s0.initCam();
 <br>solid().add(zebra(src(s0), 2, 4, Math.sin, 0.1)).out();</a></code></li></ul>
@@ -44,5 +45,5 @@
 <h2>First commited as "NodeBook"</h2>
 <p>on Jan 19th, 2023.</p>
 <h2>Released the newest</h2>
-<p>on Apr 14th, 2023.</p>
+<p>on Apr 20th, 2023.</p>
 <h6><a href="https://github.com/Uchida16104/NodeGL/commits/main/README.md">Show more</a></h6></details>
