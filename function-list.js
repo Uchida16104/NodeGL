@@ -195,3 +195,14 @@ function form(n=4, k=2,n0=0,n1=1,o=60,p=1/8,q=300) {
 			.mult(shape(n,n0,n1));
 	}
 }
+function rainbow(spectrum=0) {
+	red = () => solid(1, 0, 0);
+	orange = () => solid(1, 0.5, 0);
+	yellow = () => solid(1, 1, 0);
+	green = () => solid(0, 1, 0);
+	blue = () => solid(0, 0, 1);
+	indigo = () => solid(75 / 255, 0, 130 / 255);
+	violet = () => solid(238 / 255, 130 / 255, 238 / 255);
+	let filter = [red(), orange(), yellow(), green(), blue(), indigo(), violet()];
+	return filter[spectrum];
+}
