@@ -214,7 +214,6 @@ setFunction({
     return vec4(_c0.rgb, 1.0 - k);
   `
 });
-
 setFunction({
 	name: 'swirl',
 	type: 'coord',
@@ -231,7 +230,6 @@ setFunction({
     return mat2(cosA, -sinA, sinA, cosA) * pos + vec2(0.5);
   `
 });
-
 setFunction({
 	name: 'glitch',
 	type: 'combineCoord',
@@ -248,7 +246,6 @@ setFunction({
     return _st + offset;
   `
 });
-
 setFunction({
 	name: 'warp',
 	type: 'combineCoord',
