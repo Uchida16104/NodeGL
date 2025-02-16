@@ -231,7 +231,7 @@ setFunction({
   `
 });
 setFunction({
-	name: 'glitch',
+	name: 'modulateGlitch',
 	type: 'combineCoord',
 	inputs: [{
 		name: 'amount',
@@ -247,7 +247,7 @@ setFunction({
   `
 });
 setFunction({
-	name: 'warp',
+	name: 'modulateWarp',
 	type: 'combineCoord',
 	inputs: [{
 		name: 'intensity',
@@ -272,7 +272,7 @@ setFunction({
   `
 });
 setFunction({
-	name: 'spiral',
+	name: 'modulateSpiral',
 	type: 'combineCoord',
 	inputs: [{
 		name: 'twist',
@@ -287,7 +287,7 @@ setFunction({
   `
 });
 setFunction({
-	name: 'shear',
+	name: 'modulateShear',
 	type: 'combineCoord',
 	inputs: [{
 		name: 'strength',
@@ -299,7 +299,7 @@ setFunction({
   `
 });
 setFunction({
-	name: 'randomNoise',
+	name: 'modulateRandomNoise',
 	type: 'combineCoord',
 	inputs: [{
 		name: 'scale',
@@ -309,5 +309,216 @@ setFunction({
 	glsl: `
     float noise = fract(sin(dot(_st, vec2(12.9898, 78.233))) * 43758.5453);
     return _st + vec2(noise * scale, noise * scale * 0.5);
+  `
+});
+setFunction({
+  name: 'visual',
+  type: 'src',
+  inputs: [],
+  glsl: `
+    vec3 col = vec3(0.5 + 0.5 * cos(_st.x * 6.28318 + vec3(0.0, 2.0, 4.0)));
+    return vec4(col, 1.0);
+  `
+});
+setFunction({
+  name: 'huecircle',
+  type: 'src',
+  inputs: [],
+  glsl: `
+    vec2 pos = _st * 2.0 - 1.0;
+    float angle = atan(pos.y, pos.x) / 6.28318 + 0.5;
+    vec3 col = vec3(0.5 + 0.5 * cos(angle * 6.28318 + vec3(0.0, 2.0, 4.0)));
+    return vec4(col, 1.0);
+  `
+});
+setFunction({
+  name: 'lightning',
+  type: 'src',
+  inputs: [{ name: 'scale', type: 'float', default: 10.0 }],
+  glsl: `
+    float noise = fract(sin(dot(_st * scale, vec2(12.9898, 78.233))) * 43758.5453);
+    float lightning = smoothstep(0.4, 0.41, noise) - smoothstep(0.41, 0.42, noise);
+    return vec4(vec3(lightning), 1.0);
+  `
+});
+setFunction({
+  name: 'shake',
+  type: 'coord',
+  inputs: [],
+  glsl: `
+    return vec2(_st.x + 0.5 * sin(time), _st.y);
+  `
+});
+setFunction({
+  name: 'modulateRainbow',
+  type: 'combineCoord',
+  inputs: [],
+  glsl: `
+    return _st + 0.1 * sin(6.28318 * _st.y + time);
+  `
+});
+setFunction({
+  name: 'laserBeam',
+  type: 'src',
+  inputs: [],
+  glsl: `
+    float beam = abs(sin(time * 5.0)) * 0.05;
+    float line = smoothstep(beam, beam + 0.01, abs(_st.x - 0.5));
+    return vec4(vec3(line * 10.0, line * 0.2, line * 0.1), 1.0);
+  `
+});
+setFunction({
+  name: 'crystallens',
+  type: 'coord',
+  inputs: [],
+  glsl: `
+    vec2 p = _st * 2.0 - 1.0;
+    float r = length(p);
+    return _st + 0.1 * normalize(p) * sin(r * 10.0 - time);
+  `
+});
+setFunction({
+  name: 'fisheye',
+  type: 'coord',
+  inputs: [],
+  glsl: `
+    vec2 p = _st * 2.0 - 1.0;
+    float r = length(p);
+    return _st * (1.0 + 0.5 * r);
+  `
+});
+setFunction({
+  name: 'echo',
+  type: 'coord',
+  inputs: [],
+  glsl: `
+    return _st + 0.02 * sin(time * 2.0);
+  `
+});
+setFunction({
+  name: 'chorus',
+  type: 'coord',
+  inputs: [],
+  glsl: `
+    return _st + vec2(0.02 * sin(time * 3.0), 0.02 * cos(time * 3.0));
+  `
+});
+setFunction({
+  name: 'vibrato',
+  type: 'coord',
+  inputs: [],
+  glsl: `
+    return _st + 0.01 * sin(time * 6.0);
+  `
+});
+setFunction({
+  name: 'ringmodulator',
+  type: 'src',
+  inputs: [],
+  glsl: `
+    float baseFreq = 2.0;
+    float harmonics[9];
+    for (int i = 0; i < 8; i++) {
+      harmonics[i] = baseFreq * float(i + 1);
+    }
+    harmonics[8] = baseFreq * sqrt(2.0); // トライトーン
+    float mod = 0.0;
+    for (int i = 0; i < 9; i++) {
+      mod += sin(_st.x * harmonics[i] * 6.28318);
+    }
+    mod /= 9.0;
+    return vec4(vec3(0.5 + 0.5 * mod), 1.0);
+  `
+});
+setFunction({
+  name: 'ringmodulate',
+  type: 'coord',
+  inputs: [],
+  glsl: `
+    float baseFreq = 2.0;
+    float harmonics[9];
+    for (int i = 0; i < 8; i++) {
+      harmonics[i] = baseFreq * float(i + 1);
+    }
+    harmonics[8] = baseFreq * sqrt(2.0);
+    float mod = 0.0;
+    for (int i = 0; i < 9; i++) {
+      mod += sin(time * harmonics[i] * 6.28318);
+    }
+    mod /= 9.0;
+    return _st + vec2(0.01 * mod, 0.01 * mod);
+  `
+});
+setFunction({
+  name: 'modulateRingModulator',
+  type: 'combineCoord',
+  inputs: [],
+  glsl: `
+    float baseFreq = 2.0;
+    float harmonics[9];
+    for (int i = 0; i < 8; i++) {
+      harmonics[i] = baseFreq * float(i + 1);
+    }
+    harmonics[8] = baseFreq * sqrt(2.0);
+    float mod = 0.0;
+    for (int i = 0; i < 9; i++) {
+      mod += sin(time * harmonics[i] * 6.28318);
+    }
+    mod /= 9.0;
+    return _st + vec2(0.02 * sin(time * 3.0 + mod), 0.02 * cos(time * 3.0 + mod));
+  `
+});
+setFunction({
+  name: 'sine',
+  type: 'src',
+  inputs: [{ name: 'frequency', type: 'float', default: 2.0 }, { name: 'amplitude', type: 'float', default: 0.5 }],
+  glsl: `
+    float wave = amplitude * sin(_st.x * frequency * 6.28318 + time);
+    return vec4(vec3(0.5 + 0.5 * wave), 1.0);
+  `
+});
+setFunction({
+  name: 'saw',
+  type: 'src',
+  inputs: [{ name: 'frequency', type: 'float', default: 2.0 }, { name: 'amplitude', type: 'float', default: 0.5 }],
+  glsl: `
+    float wave = amplitude * (fract(_st.x * frequency + time) * 2.0 - 1.0);
+    return vec4(vec3(0.5 + 0.5 * wave), 1.0);
+  `
+});
+setFunction({
+  name: 'triangle',
+  type: 'src',
+  inputs: [{ name: 'frequency', type: 'float', default: 2.0 }, { name: 'amplitude', type: 'float', default: 0.5 }],
+  glsl: `
+    float wave = amplitude * abs(mod(_st.x * frequency + time, 2.0) - 1.0) * 2.0 - 1.0;
+    return vec4(vec3(0.5 + 0.5 * wave), 1.0);
+  `
+});
+setFunction({
+  name: 'pulse',
+  type: 'src',
+  inputs: [{ name: 'frequency', type: 'float', default: 2.0 }, { name: 'amplitude', type: 'float', default: 0.5 }],
+  glsl: `
+    float wave = amplitude * (mod(_st.x * frequency + time, 1.0) < 0.5 ? 1.0 : -1.0);
+    return vec4(vec3(0.5 + 0.5 * wave), 1.0);
+  `
+});
+setFunction({
+  name: 'square',
+  type: 'src',
+  inputs: [{ name: 'frequency', type: 'float', default: 2.0 }, { name: 'amplitude', type: 'float', default: 0.5 }],
+  glsl: `
+    float wave = amplitude * sign(sin(_st.x * frequency * 6.28318 + time));
+    return vec4(vec3(0.5 + 0.5 * wave), 1.0);
+  `
+});
+setFunction({
+  name: 'sand',
+  type: 'src',
+  inputs: [{ name: 'density', type: 'float', default: 10.0 }],
+  glsl: `
+    float noise = fract(sin(dot(_st * density, vec2(12.9898, 78.233))) * 43758.5453);
+    return vec4(vec3(noise), 1.0);
   `
 });
