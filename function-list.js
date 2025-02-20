@@ -522,3 +522,78 @@ setFunction({
     return vec4(vec3(noise), 1.0);
   `
 });
+setFunction({
+	name: 'chaosTree',
+	type: 'src',
+	inputs: [{
+		name: 'branches',
+		type: 'float',
+		default: 8.0
+	}],
+	glsl: `
+    vec2 uv = _st * 2.0 - 1.0;
+    float angle = atan(uv.y, uv.x);
+    float radius = length(uv);
+    float chaos = sin(angle * branches + sin(radius * 10.0 + cos(time)) * 3.0 - sin(time)) * 0.5 + 0.5;
+    vec3 color = vec3(chaos*cos(time), chaos * 0.7*sin(time), chaos * 0.4*time);
+    return vec4(color, 1.0);
+  `
+});
+setFunction({
+	name: 'lissajous',
+	type: 'src',
+	inputs: [],
+	glsl: `float x = sin(time * 2.0) * 0.5 + 0.5; float y = cos(time * 3.0) * 0.5 + 0.5; return vec4(x, y, 1.0 - x * y, 1.0);`
+});
+setFunction({
+	name: 'laserEffect',
+	type: 'color',
+	inputs: [],
+	glsl: `vec3 laser = vec3(cos(time), sin(time), cos(time/10.0)) * sin(time * 10.0); return vec4(laser, 1.0);`
+});
+setFunction({
+	name: 'lissajousLaser',
+	type: 'src',
+	inputs: [],
+	glsl: `
+    vec2 uv = _st * 2.0 - 1.0;
+    float lissajousX = sin(3.0 * uv.y + time * 1.5);
+    float lissajousY = cos(4.0 * uv.x + time * 1.2);
+    float beam = exp(-abs(lissajousX - lissajousY) * 10.0);
+    return vec4(vec3(beam, 0.0, 1.0), 1.0);
+  `
+});
+setFunction({
+	name: 'sphere',
+	type: 'src',
+	inputs: [],
+	glsl: `
+  vec2 uv = (gl_FragCoord.xy / resolution.xy) * 2.0 - 1.0;
+  uv.x *= resolution.x / resolution.y;
+  float r = length(uv);
+  float mask = smoothstep(1.0, 0.98, r);
+  float clamped = clamp(r, 0.0, 1.0);
+  float z = sqrt(1.0 - clamped * clamped);
+  vec3 normal = normalize(vec3(uv, z));
+  vec3 light = normalize(vec3(0.5, 0.8, 1.0));
+  float diff = max(dot(normal, light), 0.0);
+  vec3 col = mix(vec3(0.1, 0.1, 0.1), vec3(1.0, 0.6, 0.0), diff);
+  return vec4(col * mask, 1.0);
+  `
+})
+setFunction({
+	name: 'flower',
+	type: 'src',
+	inputs: [],
+	glsl: `
+  vec2 uv = (gl_FragCoord.xy / resolution.xy) * 2.0 - 1.0;
+  uv.x *= resolution.x / resolution.y;
+  float t = time;
+  float r = length(uv);
+  float angle = atan(uv.y, uv.x);
+  float burst = abs(sin(10.0 * angle + t * 5.0));
+  float intensity = smoothstep(0.2, 0.0, r) * burst;
+  vec3 col = vec3(sin(t * 3.0 + angle * 2.0) * 0.5 + 0.5, sin(t * 2.0 + angle * 3.0) * 0.5 + 0.5, sin(t + angle) * 0.5 + 0.5);
+  return vec4(col * intensity, 1.0);
+  `
+})
