@@ -204,216 +204,228 @@ function rainbow(spectrum = 0) {
   return filter[spectrum];
 }
 setFunction({
-	name: 'chroma',
-	type: 'color',
-	inputs: [],
-	glsl: `
+  name: "chroma",
+  type: "color",
+  inputs: [],
+  glsl: `
     float maxrb = max(_c0.r, _c0.b);
     float k = smoothstep(0.0, 1.0, (_c0.g - maxrb) * 5.0);
     _c0.g = mix(_c0.g, maxrb * 0.8, k);
     return vec4(_c0.rgb, 1.0 - k);
-  `
+  `,
 });
 setFunction({
-	name: 'swirl',
-	type: 'coord',
-	inputs: [{
-		name: 'strength',
-		type: 'float',
-		default: 1.0
-	}],
-	glsl: `
+  name: "swirl",
+  type: "coord",
+  inputs: [
+    {
+      name: "strength",
+      type: "float",
+      default: 1.0,
+    },
+  ],
+  glsl: `
     vec2 pos = _st - vec2(0.5);
     float angle = strength * length(pos);
     float sinA = sin(angle);
     float cosA = cos(angle);
     return mat2(cosA, -sinA, sinA, cosA) * pos + vec2(0.5);
-  `
+  `,
 });
 setFunction({
-	name: 'modulateGlitch',
-	type: 'combineCoord',
-	inputs: [{
-		name: 'amount',
-		type: 'float',
-		default: 0.05
-	}],
-	glsl: `
+  name: "modulateGlitch",
+  type: "combineCoord",
+  inputs: [
+    {
+      name: "amount",
+      type: "float",
+      default: 0.05,
+    },
+  ],
+  glsl: `
     vec2 offset = vec2(
       (fract(sin(dot(_st, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) * amount,
       (fract(cos(dot(_st, vec2(93.9898, 67.233))) * 35758.5453) - 0.5) * amount
     );
     return _st + offset;
-  `
+  `,
 });
 setFunction({
-	name: 'modulateWarp',
-	type: 'combineCoord',
-	inputs: [{
-		name: 'intensity',
-		type: 'float',
-		default: 0.3
-	}],
-	glsl: `
+  name: "modulateWarp",
+  type: "combineCoord",
+  inputs: [
+    {
+      name: "intensity",
+      type: "float",
+      default: 0.3,
+    },
+  ],
+  glsl: `
     vec2 uv = _st - 0.5;
     float distortion = sin(uv.x * 10.0) * sin(uv.y * 10.0) * intensity;
     return _st + vec2(distortion, distortion * 0.5);
-  `
+  `,
 });
 setFunction({
-	name: 'polar',
-	type: 'coord',
-	inputs: [],
-	glsl: `
+  name: "polar",
+  type: "coord",
+  inputs: [],
+  glsl: `
     vec2 uv = _st - 0.5;
     float r = length(uv);
     float a = atan(uv.y, uv.x);
     return vec2(r, a / 6.2831 + 0.5);
-  `
+  `,
 });
 setFunction({
-	name: 'modulateSpiral',
-	type: 'combineCoord',
-	inputs: [{
-		name: 'twist',
-		type: 'float',
-		default: 5.0
-	}],
-	glsl: `
+  name: "modulateSpiral",
+  type: "combineCoord",
+  inputs: [
+    {
+      name: "twist",
+      type: "float",
+      default: 5.0,
+    },
+  ],
+  glsl: `
     vec2 uv = _st - 0.5;
     float angle = length(uv) * twist;
     mat2 rot = mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
     return rot * uv + 0.5;
-  `
+  `,
 });
 setFunction({
-	name: 'modulateShear',
-	type: 'combineCoord',
-	inputs: [{
-		name: 'strength',
-		type: 'float',
-		default: 0.2
-	}],
-	glsl: ` 
+  name: "modulateShear",
+  type: "combineCoord",
+  inputs: [
+    {
+      name: "strength",
+      type: "float",
+      default: 0.2,
+    },
+  ],
+  glsl: ` 
     return vec2(_st.x + _st.y * strength, _st.y);
-  `
+  `,
 });
 setFunction({
-	name: 'modulateRandomNoise',
-	type: 'combineCoord',
-	inputs: [{
-		name: 'scale',
-		type: 'float',
-		default: 1.0
-	}],
-	glsl: `
+  name: "modulateRandomNoise",
+  type: "combineCoord",
+  inputs: [
+    {
+      name: "scale",
+      type: "float",
+      default: 1.0,
+    },
+  ],
+  glsl: `
     float noise = fract(sin(dot(_st, vec2(12.9898, 78.233))) * 43758.5453);
     return _st + vec2(noise * scale, noise * scale * 0.5);
-  `
+  `,
 });
 setFunction({
-  name: 'visual',
-  type: 'src',
+  name: "visual",
+  type: "src",
   inputs: [],
   glsl: `
     vec3 col = vec3(0.5 + 0.5 * cos(_st.x * 6.28318 + vec3(0.0, 2.0, 4.0)));
     return vec4(col, 1.0);
-  `
+  `,
 });
 setFunction({
-  name: 'huecircle',
-  type: 'src',
+  name: "huecircle",
+  type: "src",
   inputs: [],
   glsl: `
     vec2 pos = _st * 2.0 - 1.0;
     float angle = atan(pos.y, pos.x) / 6.28318 + 0.5;
     vec3 col = vec3(0.5 + 0.5 * cos(angle * 6.28318 + vec3(0.0, 2.0, 4.0)));
     return vec4(col, 1.0);
-  `
+  `,
 });
 setFunction({
-  name: 'lightning',
-  type: 'src',
-  inputs: [{ name: 'scale', type: 'float', default: 10.0 }],
+  name: "lightning",
+  type: "src",
+  inputs: [{ name: "scale", type: "float", default: 10.0 }],
   glsl: `
     float noise = fract(sin(dot(_st * scale, vec2(12.9898, 78.233))) * 43758.5453);
     float lightning = smoothstep(0.4, 0.41, noise) - smoothstep(0.41, 0.42, noise);
     return vec4(vec3(lightning), 1.0);
-  `
+  `,
 });
 setFunction({
-  name: 'shake',
-  type: 'coord',
+  name: "shake",
+  type: "coord",
   inputs: [],
   glsl: `
     return vec2(_st.x + 0.5 * sin(time), _st.y);
-  `
+  `,
 });
 setFunction({
-  name: 'modulateRainbow',
-  type: 'combineCoord',
+  name: "modulateRainbow",
+  type: "combineCoord",
   inputs: [],
   glsl: `
     return _st + 0.1 * sin(6.28318 * _st.y + time);
-  `
+  `,
 });
 setFunction({
-  name: 'laserBeam',
-  type: 'src',
+  name: "laserBeam",
+  type: "src",
   inputs: [],
   glsl: `
     float beam = abs(sin(time * 5.0)) * 0.05;
     float line = smoothstep(beam, beam + 0.01, abs(_st.x - 0.5));
     return vec4(vec3(line * 10.0, line * 0.2, line * 0.1), 1.0);
-  `
+  `,
 });
 setFunction({
-  name: 'crystallens',
-  type: 'coord',
+  name: "crystallens",
+  type: "coord",
   inputs: [],
   glsl: `
     vec2 p = _st * 2.0 - 1.0;
     float r = length(p);
     return _st + 0.1 * normalize(p) * sin(r * 10.0 - time);
-  `
+  `,
 });
 setFunction({
-  name: 'fisheye',
-  type: 'coord',
+  name: "fisheye",
+  type: "coord",
   inputs: [],
   glsl: `
     vec2 p = _st * 2.0 - 1.0;
     float r = length(p);
     return _st * (1.0 + 0.5 * r);
-  `
+  `,
 });
 setFunction({
-  name: 'echo',
-  type: 'coord',
+  name: "echo",
+  type: "coord",
   inputs: [],
   glsl: `
     return _st + 0.02 * sin(time * 2.0);
-  `
+  `,
 });
 setFunction({
-  name: 'chorus',
-  type: 'coord',
+  name: "chorus",
+  type: "coord",
   inputs: [],
   glsl: `
     return _st + vec2(0.02 * sin(time * 3.0), 0.02 * cos(time * 3.0));
-  `
+  `,
 });
 setFunction({
-  name: 'vibrato',
-  type: 'coord',
+  name: "vibrato",
+  type: "coord",
   inputs: [],
   glsl: `
     return _st + 0.01 * sin(time * 6.0);
-  `
+  `,
 });
 setFunction({
-  name: 'ringmodulator',
-  type: 'src',
+  name: "ringmodulator",
+  type: "src",
   inputs: [],
   glsl: `
     float baseFreq = 2.0;
@@ -428,11 +440,11 @@ setFunction({
     }
     mod /= 9.0;
     return vec4(vec3(0.5 + 0.5 * mod), 1.0);
-  `
+  `,
 });
 setFunction({
-  name: 'ringmodulate',
-  type: 'coord',
+  name: "ringmodulate",
+  type: "coord",
   inputs: [],
   glsl: `
     float baseFreq = 2.0;
@@ -447,11 +459,11 @@ setFunction({
     }
     mod /= 9.0;
     return _st + vec2(0.01 * mod, 0.01 * mod);
-  `
+  `,
 });
 setFunction({
-  name: 'modulateRingModulator',
-  type: 'combineCoord',
+  name: "modulateRingModulator",
+  type: "combineCoord",
   inputs: [],
   glsl: `
     float baseFreq = 2.0;
@@ -466,108 +478,125 @@ setFunction({
     }
     mod /= 9.0;
     return _st + vec2(0.02 * sin(time * 3.0 + mod), 0.02 * cos(time * 3.0 + mod));
-  `
+  `,
 });
 setFunction({
-  name: 'sine',
-  type: 'src',
-  inputs: [{ name: 'frequency', type: 'float', default: 2.0 }, { name: 'amplitude', type: 'float', default: 0.5 }],
+  name: "sine",
+  type: "src",
+  inputs: [
+    { name: "frequency", type: "float", default: 2.0 },
+    { name: "amplitude", type: "float", default: 0.5 },
+  ],
   glsl: `
     float wave = amplitude * sin(_st.x * frequency * 6.28318 + time);
     return vec4(vec3(0.5 + 0.5 * wave), 1.0);
-  `
+  `,
 });
 setFunction({
-  name: 'saw',
-  type: 'src',
-  inputs: [{ name: 'frequency', type: 'float', default: 2.0 }, { name: 'amplitude', type: 'float', default: 0.5 }],
+  name: "saw",
+  type: "src",
+  inputs: [
+    { name: "frequency", type: "float", default: 2.0 },
+    { name: "amplitude", type: "float", default: 0.5 },
+  ],
   glsl: `
     float wave = amplitude * (fract(_st.x * frequency + time) * 2.0 - 1.0);
     return vec4(vec3(0.5 + 0.5 * wave), 1.0);
-  `
+  `,
 });
 setFunction({
-  name: 'triangle',
-  type: 'src',
-  inputs: [{ name: 'frequency', type: 'float', default: 2.0 }, { name: 'amplitude', type: 'float', default: 0.5 }],
+  name: "triangle",
+  type: "src",
+  inputs: [
+    { name: "frequency", type: "float", default: 2.0 },
+    { name: "amplitude", type: "float", default: 0.5 },
+  ],
   glsl: `
     float wave = amplitude * abs(mod(_st.x * frequency + time, 2.0) - 1.0) * 2.0 - 1.0;
     return vec4(vec3(0.5 + 0.5 * wave), 1.0);
-  `
+  `,
 });
 setFunction({
-  name: 'pulse',
-  type: 'src',
-  inputs: [{ name: 'frequency', type: 'float', default: 2.0 }, { name: 'amplitude', type: 'float', default: 0.5 }],
+  name: "pulse",
+  type: "src",
+  inputs: [
+    { name: "frequency", type: "float", default: 2.0 },
+    { name: "amplitude", type: "float", default: 0.5 },
+  ],
   glsl: `
     float wave = amplitude * (mod(_st.x * frequency + time, 1.0) < 0.5 ? 1.0 : -1.0);
     return vec4(vec3(0.5 + 0.5 * wave), 1.0);
-  `
+  `,
 });
 setFunction({
-  name: 'square',
-  type: 'src',
-  inputs: [{ name: 'frequency', type: 'float', default: 2.0 }, { name: 'amplitude', type: 'float', default: 0.5 }],
+  name: "square",
+  type: "src",
+  inputs: [
+    { name: "frequency", type: "float", default: 2.0 },
+    { name: "amplitude", type: "float", default: 0.5 },
+  ],
   glsl: `
     float wave = amplitude * sign(sin(_st.x * frequency * 6.28318 + time));
     return vec4(vec3(0.5 + 0.5 * wave), 1.0);
-  `
+  `,
 });
 setFunction({
-  name: 'sand',
-  type: 'src',
-  inputs: [{ name: 'density', type: 'float', default: 10.0 }],
+  name: "sand",
+  type: "src",
+  inputs: [{ name: "density", type: "float", default: 10.0 }],
   glsl: `
     float noise = fract(sin(dot(_st * density, vec2(12.9898, 78.233))) * 43758.5453);
     return vec4(vec3(noise), 1.0);
-  `
+  `,
 });
 setFunction({
-	name: 'chaosTree',
-	type: 'src',
-	inputs: [{
-		name: 'branches',
-		type: 'float',
-		default: 8.0
-	}],
-	glsl: `
+  name: "chaosTree",
+  type: "src",
+  inputs: [
+    {
+      name: "branches",
+      type: "float",
+      default: 8.0,
+    },
+  ],
+  glsl: `
     vec2 uv = _st * 2.0 - 1.0;
     float angle = atan(uv.y, uv.x);
     float radius = length(uv);
     float chaos = sin(angle * branches + sin(radius * 10.0 + cos(time)) * 3.0 - sin(time)) * 0.5 + 0.5;
     vec3 color = vec3(chaos*cos(time), chaos * 0.7*sin(time), chaos * 0.4*time);
     return vec4(color, 1.0);
-  `
+  `,
 });
 setFunction({
-	name: 'lissajous',
-	type: 'src',
-	inputs: [],
-	glsl: `float x = sin(time * 2.0) * 0.5 + 0.5; float y = cos(time * 3.0) * 0.5 + 0.5; return vec4(x, y, 1.0 - x * y, 1.0);`
+  name: "lissajous",
+  type: "src",
+  inputs: [],
+  glsl: `float x = sin(time * 2.0) * 0.5 + 0.5; float y = cos(time * 3.0) * 0.5 + 0.5; return vec4(x, y, 1.0 - x * y, 1.0);`,
 });
 setFunction({
-	name: 'laserEffect',
-	type: 'color',
-	inputs: [],
-	glsl: `vec3 laser = vec3(cos(time), sin(time), cos(time/10.0)) * sin(time * 10.0); return vec4(laser, 1.0);`
+  name: "laserEffect",
+  type: "color",
+  inputs: [],
+  glsl: `vec3 laser = vec3(cos(time), sin(time), cos(time/10.0)) * sin(time * 10.0); return vec4(laser, 1.0);`,
 });
 setFunction({
-	name: 'lissajousLaser',
-	type: 'src',
-	inputs: [],
-	glsl: `
+  name: "lissajousLaser",
+  type: "src",
+  inputs: [],
+  glsl: `
     vec2 uv = _st * 2.0 - 1.0;
     float lissajousX = sin(3.0 * uv.y + time * 1.5);
     float lissajousY = cos(4.0 * uv.x + time * 1.2);
     float beam = exp(-abs(lissajousX - lissajousY) * 10.0);
     return vec4(vec3(beam, 0.0, 1.0), 1.0);
-  `
+  `,
 });
 setFunction({
-	name: 'sphere',
-	type: 'src',
-	inputs: [],
-	glsl: `
+  name: "sphere",
+  type: "src",
+  inputs: [],
+  glsl: `
   vec2 uv = (gl_FragCoord.xy / resolution.xy) * 2.0 - 1.0;
   uv.x *= resolution.x / resolution.y;
   float r = length(uv);
@@ -577,15 +606,15 @@ setFunction({
   vec3 normal = normalize(vec3(uv, z));
   vec3 light = normalize(vec3(0.5, 0.8, 1.0));
   float diff = max(dot(normal, light), 0.0);
-  vec3 col = mix(vec3(0.1, 0.1, 0.1), vec3(1.0, 0.6, 0.0), diff);
+  vec3 col = mix(vec3(0.1, 0.1, 0.1), vec3(1.0, 1.0, 1.0), diff);
   return vec4(col * mask, 1.0);
-  `
-})
+  `,
+});
 setFunction({
-	name: 'flower',
-	type: 'src',
-	inputs: [],
-	glsl: `
+  name: "flower",
+  type: "src",
+  inputs: [],
+  glsl: `
   vec2 uv = (gl_FragCoord.xy / resolution.xy) * 2.0 - 1.0;
   uv.x *= resolution.x / resolution.y;
   float t = time;
@@ -595,5 +624,40 @@ setFunction({
   float intensity = smoothstep(0.2, 0.0, r) * burst;
   vec3 col = vec3(sin(t * 3.0 + angle * 2.0) * 0.5 + 0.5, sin(t * 2.0 + angle * 3.0) * 0.5 + 0.5, sin(t + angle) * 0.5 + 0.5);
   return vec4(col * intensity, 1.0);
-  `
-})
+  `,
+});
+setFunction({
+  name: "oil",
+  type: "color",
+  inputs: [],
+  glsl: `
+    vec3 col = _c0.rgb;
+    float noise = fract(sin(dot(col, vec3(12.9898,78.233,37.719)))*43758.5453);
+    vec3 tone = pow(col, vec3(1.2));
+    vec3 result = mix(tone, tone * noise, 0.3);
+    return vec4(result, _c0.a);
+    `,
+});
+setFunction({
+  name: "watercolor",
+  type: "color",
+  inputs: [],
+  glsl: `
+  vec3 col = _c0.rgb;
+    float noise = fract(sin(dot(col, vec3(12.9898,78.233,37.719)))*43758.5453);
+    vec3 soft = smoothstep(0.0, 1.0, col);
+    vec3 result = mix(soft, mix(soft, vec3(1.0) - soft, noise * 0.2), 0.5);
+    return vec4(result, _c0.a);
+    `,
+});
+setFunction({
+  name: "ink",
+  type: "color",
+  inputs: [],
+  glsl: `
+  float gray = dot(_c0.rgb, vec3(0.299,0.587,0.114));
+    float noise = fract(sin(gray * 12.9898) * 43758.5453);
+    gray = smoothstep(0.3, 0.7, gray + noise * 0.2);
+    return vec4(vec3(gray), _c0.a);
+    `,
+});
