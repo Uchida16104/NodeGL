@@ -370,7 +370,7 @@ setFunction({
   `,
 });
 setFunction({
-  name: "laserBeam",
+  name: "beam",
   type: "src",
   inputs: [],
   glsl: `
@@ -380,7 +380,7 @@ setFunction({
   `,
 });
 setFunction({
-  name: "crystallens",
+  name: "crystal",
   type: "coord",
   inputs: [],
   glsl: `
@@ -424,7 +424,7 @@ setFunction({
   `,
 });
 setFunction({
-  name: "ringmodulator",
+  name: "ringModulator",
   type: "src",
   inputs: [],
   glsl: `
@@ -443,7 +443,7 @@ setFunction({
   `,
 });
 setFunction({
-  name: "ringmodulate",
+  name: "ringModulate",
   type: "coord",
   inputs: [],
   glsl: `
@@ -550,7 +550,7 @@ setFunction({
   `,
 });
 setFunction({
-  name: "chaosTree",
+  name: "chaos",
   type: "src",
   inputs: [
     {
@@ -575,13 +575,13 @@ setFunction({
   glsl: `float x = sin(time * 2.0) * 0.5 + 0.5; float y = cos(time * 3.0) * 0.5 + 0.5; return vec4(x, y, 1.0 - x * y, 1.0);`,
 });
 setFunction({
-  name: "laserEffect",
+  name: "laser",
   type: "color",
   inputs: [],
   glsl: `vec3 laser = vec3(cos(time), sin(time), cos(time/10.0)) * sin(time * 10.0); return vec4(laser, 1.0);`,
 });
 setFunction({
-  name: "lissajousLaser",
+  name: "lissajouslaser",
   type: "src",
   inputs: [],
   glsl: `
