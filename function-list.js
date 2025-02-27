@@ -661,3 +661,54 @@ setFunction({
     return vec4(vec3(gray), _c0.a);
     `,
 });
+setFunction({
+  name: "parametriclaser",
+  type: "src",
+  inputs: [
+    {
+      name: "x",
+      type: "float",
+      default: "sqrt(0.5)*cos(time)",
+    },
+    {
+      name: "y",
+      type: "float",
+      default: "sqrt(0.5)*sin(time)",
+    },
+    {
+      name: "thinness",
+      type: "float",
+      default: 100.0,
+    },
+    {
+      name: "intensity",
+      type: "float",
+      default: 0.125,
+    },
+    {
+      name: "r",
+      type: "float",
+      default: 1.0,
+    },
+    {
+      name: "g",
+      type: "float",
+      default: 1.0,
+    },
+    {
+      name: "b",
+      type: "float",
+      default: 1.0,
+    },
+  ],
+  glsl: `
+    vec2 uv = _st * 2.0 - 1.0;
+    
+    float d = length(uv - vec2(x, y));
+    float beam = exp(-1.0* thinness * d) * intensity;
+    
+    vec3 color = vec3(beam * r, beam * g, beam * b);
+    
+    return vec4(color, 1.0);
+  `,
+});
