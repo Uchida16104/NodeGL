@@ -712,3 +712,9 @@ setFunction({
     return vec4(color, 1.0);
   `,
 });
+function repeatoperator(operator, parameterFn, count, stream) {
+	for (let i = 0; i < count; i++) {
+		stream = stream[operator](parameterFn());
+	}
+	return stream;
+}
