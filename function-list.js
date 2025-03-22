@@ -703,12 +703,9 @@ setFunction({
   ],
   glsl: `
     vec2 uv = _st * 2.0 - 1.0;
-    
     float d = length(uv - vec2(x, y));
     float beam = exp(-1.0 * thinness * d) * intensity;
-    
     vec3 color = vec3(beam * r, beam * g, beam * b);
-    
     return vec4(color, 1.0);
   `,
 });
@@ -717,4 +714,16 @@ function repeatoperator(operator, parameterFn, count, stream) {
 		stream = stream[operator](parameterFn());
 	}
 	return stream;
+}
+function delay(wait, synth, ms, output) {
+	output = (typeof output !== "undefined") ? output : o0;
+	const fallback = (synth.inputs && synth.inputs[0]) ? synth.inputs[0] : wait;
+	return {
+		out: function() {
+			setTimeout(() => {
+				synth.out(output);
+			}, ms);
+			return fallback.out(output);
+		}
+	};
 }
