@@ -727,3 +727,57 @@ function delay(wait, synth, ms, output) {
 		}
 	};
 }
+setFunction({
+  name: "disassemble",
+  type: "color",
+  inputs: [
+    {
+      type: "float",
+      name: "depthFactor",
+      default: 0.5,
+    },
+    {
+      type: "float",
+      name: "timeSpeed",
+      default: 1.0,
+    },
+  ],
+  glsl: `
+    vec2 uv = _st;
+    float depth = texture2D(_c0, uv).r;
+    float offset = sin(time * timeSpeed + depth * depthFactor) * 0.05;
+    uv.x += offset;
+    uv.y += offset;
+    vec4 color = texture2D(_c0, uv);
+    return color;
+  `,
+});
+setFunction({
+  name: "split",
+  type: "coord",
+  inputs: [
+    {
+      type: "float",
+      name: "splitIntensity",
+      default: 0.3,
+    },
+    {
+      type: "float",
+      name: "timeSpeed",
+      default: 1.0,
+    },
+  ],
+  glsl: `
+    vec2 uv = _st;
+    float depth = texture2D(_c0, uv).r;
+    float angle = time * timeSpeed + depth * 3.1415;
+    float offsetX = cos(angle) * splitIntensity;
+    float offsetY = sin(angle) * splitIntensity;
+    if (mod(gl_FragCoord.y, 2.0) < 1.0) {
+      uv.x += offsetX;
+    } else {
+      uv.y += offsetY;
+    }
+    return uv;
+  `,
+});
