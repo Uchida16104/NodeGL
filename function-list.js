@@ -829,7 +829,6 @@ setFunction({
     if (lum < 0.5) { color *= metaphysical_shadowIntensity; }
     color = mix(color, vec3(lum), metaphysical_desaturation);
     res = vec4(color, res.a);
-    
     return res;
   `
 });
