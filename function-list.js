@@ -781,3 +781,55 @@ setFunction({
     return uv;
   `,
 });
+setFunction({
+  name: 'painting',
+  type: 'color',
+  inputs: [
+    { type: 'float', name: 'romanesque_textureScale', default: 4.0 },
+    { type: 'float', name: 'romanesque_darkness', default: 0.5 },
+    { type: 'float', name: 'renaissance_shadowIntensity', default: 0.7 },
+    { type: 'float', name: 'renaissance_lightDirectionX', default: 0.5 },
+    { type: 'float', name: 'renaissance_lightDirectionY', default: 0.5 },
+    { type: 'float', name: 'baroque_contrast', default: 1.5 },
+    { type: 'float', name: 'baroque_spotlightX', default: 0.5 },
+    { type: 'float', name: 'baroque_spotlightY', default: 0.5 },
+    { type: 'float', name: 'romanticism_lightIntensity', default: 1.2 },
+    { type: 'float', name: 'romanticism_saturation', default: 1.3 },
+    { type: 'float', name: 'barbizon_warmth', default: 0.2 },
+    { type: 'float', name: 'barbizon_softFocus', default: 0.1 },
+    { type: 'float', name: 'metaphysical_shadowIntensity', default: 0.7 },
+    { type: 'float', name: 'metaphysical_desaturation', default: 0.5 }
+  ],
+  glsl: `
+    vec2 uv = gl_FragCoord.xy / resolution.xy * romanesque_textureScale;
+    float stonePattern = fract(sin(dot(uv, vec2(12.9898, 78.233))) * 43758.5453);
+    vec3 stoneColor = vec3(0.6, 0.5, 0.4) * (1.0 - romanesque_darkness * stonePattern);
+    vec4 res = vec4(stoneColor * _c0.rgb, _c0.a);
+    uv = gl_FragCoord.xy / resolution.xy;
+    vec2 lightDir = normalize(vec2(renaissance_lightDirectionX, renaissance_lightDirectionY));
+    float lighting = dot(uv, lightDir) * 0.5 + 0.5;
+    vec3 shadedColor = mix(res.rgb * renaissance_shadowIntensity, res.rgb, lighting);
+    res = vec4(shadedColor, res.a);
+    float dist = distance(uv, vec2(baroque_spotlightX, baroque_spotlightY));
+    float spotlight = smoothstep(0.5, 0.2, dist);
+    vec3 contrasted = (res.rgb - 0.5) * baroque_contrast + 0.5;
+    vec3 finalColor = mix(contrasted, res.rgb, spotlight);
+    res = vec4(finalColor, res.a);
+    vec3 color = res.rgb;
+    vec3 light = vec3(0.5, 0.5, 0.5) * romanticism_lightIntensity;
+    color = mix(color, light, 0.5);
+    float gray = dot(color, vec3(0.299, 0.587, 0.114));
+    color = mix(vec3(gray), color, romanticism_saturation);
+    res = vec4(color, res.a);
+    color = res.rgb + vec3(barbizon_warmth, barbizon_warmth * 0.5, 0.0);
+    color = mix(color, vec3(0.5), barbizon_softFocus);
+    res = vec4(color, res.a);
+    color = res.rgb;
+    float lum = dot(color, vec3(0.299, 0.587, 0.114));
+    if (lum < 0.5) { color *= metaphysical_shadowIntensity; }
+    color = mix(color, vec3(lum), metaphysical_desaturation);
+    res = vec4(color, res.a);
+    
+    return res;
+  `
+});
