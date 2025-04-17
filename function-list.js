@@ -710,22 +710,22 @@ setFunction({
   `,
 });
 function repeatoperator(operator, parameterFn, count, stream) {
-	for (let i = 0; i < count; i++) {
-		stream = stream[operator](parameterFn());
-	}
-	return stream;
+  for (let i = 0; i < count; i++) {
+    stream = stream[operator](parameterFn());
+  }
+  return stream;
 }
 function delay(wait, synth, ms, output) {
-	output = (typeof output !== "undefined") ? output : o0;
-	const fallback = (synth.inputs && synth.inputs[0]) ? synth.inputs[0] : wait;
-	return {
-		out: function() {
-			setTimeout(() => {
-				synth.out(output);
-			}, ms);
-			return fallback.out(output);
-		}
-	};
+  output = typeof output !== "undefined" ? output : o0;
+  const fallback = synth.inputs && synth.inputs[0] ? synth.inputs[0] : wait;
+  return {
+    out: function () {
+      setTimeout(() => {
+        synth.out(output);
+      }, ms);
+      return fallback.out(output);
+    },
+  };
 }
 setFunction({
   name: "disassemble",
@@ -782,23 +782,23 @@ setFunction({
   `,
 });
 setFunction({
-  name: 'painting',
-  type: 'color',
+  name: "painting",
+  type: "color",
   inputs: [
-    { type: 'float', name: 'romanesque_textureScale', default: 4.0 },
-    { type: 'float', name: 'romanesque_darkness', default: 0.5 },
-    { type: 'float', name: 'renaissance_shadowIntensity', default: 0.7 },
-    { type: 'float', name: 'renaissance_lightDirectionX', default: 0.5 },
-    { type: 'float', name: 'renaissance_lightDirectionY', default: 0.5 },
-    { type: 'float', name: 'baroque_contrast', default: 1.5 },
-    { type: 'float', name: 'baroque_spotlightX', default: 0.5 },
-    { type: 'float', name: 'baroque_spotlightY', default: 0.5 },
-    { type: 'float', name: 'romanticism_lightIntensity', default: 1.2 },
-    { type: 'float', name: 'romanticism_saturation', default: 1.3 },
-    { type: 'float', name: 'barbizon_warmth', default: 0.2 },
-    { type: 'float', name: 'barbizon_softFocus', default: 0.1 },
-    { type: 'float', name: 'metaphysical_shadowIntensity', default: 0.7 },
-    { type: 'float', name: 'metaphysical_desaturation', default: 0.5 }
+    { type: "float", name: "romanesque_textureScale", default: 4.0 },
+    { type: "float", name: "romanesque_darkness", default: 0.5 },
+    { type: "float", name: "renaissance_shadowIntensity", default: 0.7 },
+    { type: "float", name: "renaissance_lightDirectionX", default: 0.5 },
+    { type: "float", name: "renaissance_lightDirectionY", default: 0.5 },
+    { type: "float", name: "baroque_contrast", default: 1.5 },
+    { type: "float", name: "baroque_spotlightX", default: 0.5 },
+    { type: "float", name: "baroque_spotlightY", default: 0.5 },
+    { type: "float", name: "romanticism_lightIntensity", default: 1.2 },
+    { type: "float", name: "romanticism_saturation", default: 1.3 },
+    { type: "float", name: "barbizon_warmth", default: 0.2 },
+    { type: "float", name: "barbizon_softFocus", default: 0.1 },
+    { type: "float", name: "metaphysical_shadowIntensity", default: 0.7 },
+    { type: "float", name: "metaphysical_desaturation", default: 0.5 },
   ],
   glsl: `
     vec2 uv = gl_FragCoord.xy / resolution.xy * romanesque_textureScale;
@@ -830,5 +830,70 @@ setFunction({
     color = mix(color, vec3(lum), metaphysical_desaturation);
     res = vec4(color, res.a);
     return res;
-  `
+  `,
+});
+setFunction({
+  name: "over",
+  type: "color",
+  inputs: [
+    { type: "float", name: "noiseScale", default: 1.0 },
+    { type: "float", name: "grainIntensity", default: 0.3 },
+    { type: "float", name: "edgeStrength", default: 1.0 },
+    { type: "float", name: "shade", default: 0.6 },
+  ],
+  glsl: `
+    vec2 uv = gl_FragCoord.xy / resolution.xy;
+    vec3 col = _c0.rgb;
+    float lum = dot(col, vec3(0.299, 0.587, 0.114));
+    float dx = 1.0 / resolution.x;
+    float dy = 1.0 / resolution.y;
+    float lumLeft = dot(texture2D(tex0, uv + vec2(-dx, 0.0)).rgb, vec3(0.299, 0.587, 0.114));
+    float lumRight = dot(texture2D(tex0, uv + vec2(dx, 0.0)).rgb, vec3(0.299, 0.587, 0.114));
+    float lumUp = dot(texture2D(tex0, uv + vec2(0.0, dy)).rgb, vec3(0.299, 0.587, 0.114));
+    float lumDown = dot(texture2D(tex0, uv + vec2(0.0, -dy)).rgb, vec3(0.299, 0.587, 0.114));
+    float edge = abs(lumLeft - lumRight) + abs(lumUp - lumDown);
+    edge = clamp(edge * edgeStrength, 0.0, 1.0);
+    float noise = fract(sin(dot(uv * noiseScale + time, vec2(12.9898, 78.233))) * 43758.5453);
+    float grain = (noise - 0.5) * grainIntensity;
+    float finalLum = lum * (1.0 - edge) + grain;
+    finalLum = mix(finalLum, lum, shade);
+    return vec4(vec3(finalLum), _c0.a);
+  `,
+});
+setFunction({
+  name: "sketch",
+  type: "color",
+  inputs: [
+    {
+      type: "float",
+      name: "edgeStrength",
+      default: 1.0,
+    },
+    {
+      type: "float",
+      name: "noiseScale",
+      default: 1.0,
+    },
+    {
+      type: "float",
+      name: "noiseIntensity",
+      default: 0.5,
+    },
+    {
+      type: "float",
+      name: "paperTexture",
+      default: 0.3,
+    },
+  ],
+  glsl: `
+    vec3 color = _c0.rgb;
+    float lum = dot(color, vec3(0.299, 0.587, 0.114));
+    float edge = smoothstep(0.2, 0.8, abs(lum - 0.5)) * edgeStrength;
+    vec2 uv = gl_FragCoord.xy / resolution.xy;
+    float noise = fract(sin(dot(uv * noiseScale + time, vec2(12.9898,78.233))) * 43758.5453);
+    float paper = fract(sin(dot(uv * 100.0, vec2(12.9898,78.233))) * 43758.5453);
+    vec3 sketch = mix(vec3(1.0 - edge), vec3(noise), noiseIntensity);
+    sketch = mix(sketch, vec3(paper), paperTexture);
+    return vec4(sketch, _c0.a);
+  `,
 });
