@@ -897,3 +897,60 @@ setFunction({
     return vec4(sketch, _c0.a);
   `,
 });
+setFunction({
+	name: 'fractal',
+	type: 'src',
+	inputs: [{
+			type: 'float',
+			name: 'len',
+			default: 0.5
+		},
+		{
+			type: 'float',
+			name: 'lr',
+			default: 0.7
+		},
+		{
+			type: 'float',
+			name: 'rr',
+			default: 0.7
+		},
+		{
+			type: 'float',
+			name: 'th',
+			default: 0.5
+		},
+		{
+			type: 'float',
+			name: 'n',
+			default: 6
+		},
+		{
+			type: 'float',
+			name: 'k',
+			default: 10
+		},
+	],
+	glsl: `
+    vec2 uv = (gl_FragCoord.xy / resolution.xy) * 2.0 - 1.0;
+    uv.x *= resolution.x / resolution.y;
+    vec3 col = vec3(0.0);
+    for(int b = 0; b < 2; b++){
+      vec2 p     = uv;
+      float sc   = len;
+      float ag   = (b == 0 ?  th : -th) * sin(time);
+      float rat  = (b == 0 ?  lr :  rr);
+      for(int i = 0; i < 1000000000; i++){
+        if(i >= int(n)) break;
+        float d = length(vec2(p.x, p.y - sc * 0.5)) - 0.01;
+        col += vec3(smoothstep(0.01, 0.0, d));
+        p = mat2(cos(ag), -sin(ag),
+                 sin(ag),  cos(ag))
+            * (p - vec2(0.0, sc));
+        sc    *= rat;
+        ag    *= 0.9;
+      }
+    }
+    return vec4(col, 1.0);
+  `
+});
