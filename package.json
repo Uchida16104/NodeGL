@@ -1,5 +1,5 @@
 {
-  "name": "NodeGL",
+  "name": "@hirotoshiuchida/NodeGL",
   "version": "1.3.0",
   "description": "It'll be convenience for hydra used by Node.js.",
   "main": "./index.cjs",
