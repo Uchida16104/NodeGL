@@ -58,7 +58,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ needs.setup.outputs.version }}
-          name: "Crearte ${{ needs.setup.outputs.version }}"
+          name: "NodeGL ${{ needs.setup.outputs.version }}"
           body: |
             ✅ Automated multi-platform release of Node.js:
             - 📦 npm Package (npmjs.com)
