@@ -1,10 +1,10 @@
 {
   "name": "@Uchida16104/NodeGL",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "It'll be convenience for hydra used by Node.js.",
   "main": "./index.cjs",
   "bin": {
-    "crearte": "./index.cjs"
+    "nodegl": "./index.cjs"
   },
   "repository": {
     "type": "git",
