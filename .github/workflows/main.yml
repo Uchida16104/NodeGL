@@ -1,4 +1,4 @@
-name: Release Crearte
+name: Release NodeGL
 
 on:
   push:
