@@ -1,6 +1,6 @@
 {
-  "name": "@Uchida16104/NodeGL",
-  "version": "1.8.0",
+  "name": "NodeGL",
+  "version": "2.0.0",
   "description": "It'll be convenience for hydra used by Node.js.",
   "main": "./index.cjs",
   "bin": {
