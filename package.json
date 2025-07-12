@@ -1,0 +1,30 @@
+{
+  "name": "NodeGL",
+  "version": "1.0.0",
+  "description": "It'll be convenience for hydra used by Node.js.",
+  "main": "./index.cjs",
+  "bin": {
+    "crearte": "./index.cjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Uchida16104/NodeGL.git"
+  },
+  "publishConfig": {
+    "@Uchida16104:registry": "https://npm.pkg.github.com"
+  },
+  "bugs": {
+    "url": "https://github.com/Uchida16104/NodeGL/issues"
+  },
+  "homepage": "https://uchida16104.github.io/NodeGL",
+  "author": "Hirotoshi Uchida",
+  "license": "MIT",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node ./index.cjs && rm -f package.json && refresh",
+    "test": "echo 'Running NodeGL...'"
+  },
+  "keywords": [
+    "extension"
+  ]
+}
