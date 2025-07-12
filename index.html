@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NodeGL</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://cdn.glitch.global/efd0d1ad-4977-47ea-a2d9-9ce05d4c70fa/nodegl-logo.png?v=1676040680862"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="https://cdn.glitch.global/efd0d1ad-4977-47ea-a2d9-9ce05d4c70fa/nodegl-logo.png?v=1676040680862"
+    />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Hirotoshi Uchida",
+        "url": "https://hirotoshiuchida.glitch.me",
+        "sameAs": [
+          "g.co/kgs/sfhWkK",
+          "g.co/kgs/LDV2Pv",
+          "https://x.com/h1r010sh1",
+          "https://www.facebook.com/Uchida16104",
+          "https://www.instagram.com/hirotoshiuchida",
+          "https://hearthis.at/hirotoshi-uchida",
+          "https://hearthis.at/hirotoshi-uchida-2nd",
+          "https://hearthis.at/hirotoshi-uchida-3rd",
+          "https://youtube.com/@HirotoshiUchida",
+          "https://github.com/Uchida16104",
+          "https://lit.link/hirotoshiuchida"
+        ]
+      }
+    </script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/monaspace-font@0.0.2/krypton.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/hydra-synth"></script>
+  </head>
+  <body>
+    <div class="sidebar">
+      <div class="accordion">
+        <div class="accordion-header">Menu</div>
+        <div class="accordion-content">
+          <ul>
+            <li><a href="#title">NodeGL</a></li>
+            <li><a href="#usage">Usage</a></li>
+            <li><a href="#first">First to do</a></li>
+            <li><a href="#y">glslAxis("y")</a></li>
+            <li><a href="#2y">glslAxis("2y")</a></li>
+            <li><a href="#flash">flash</a></li>
+            <li><a href="#list">list</a></li>
+            <li><a href="#easeinout">easeInOut</a></li>
+            <li><a href="#vardef">varDef</a></li>
+            <li><a href="#funcary">funcAry</a></li>
+            <li><a href="#randary">randAry</a></li>
+            <li><a href="#genary">genAry</a></li>
+            <li><a href="#setloop">setLoop</a></li>
+            <li><a href="#form">form</a></li>
+            <li><a href="#pad">pad</a></li>
+            <li><a href="#rainbow">rainbow</a></li>
+            <li><a href="#particle">particle</a></li>
+            <li><a href="#zebra">zebra</a></li>
+            <li><a href="#swirl">swirl</a></li>
+            <li><a href="#modulateglitch">modulateGlitch</a></li>
+            <li><a href="#modulatewarp">modulateWarp</a></li>
+            <li><a href="#polar">polar</a></li>
+            <li><a href="#modulatespiral">modulateSpiral</a></li>
+            <li><a href="#modulateshear">modulateShear</a></li>
+            <li><a href="#modulaterandomnoise">modulateRandomNoise</a></li>
+            <li><a href="#visual">visual</a></li>
+            <li><a href="#huecircle">huecircle</a></li>
+            <li><a href="#lightning">lightning</a></li>
+            <li><a href="#shake">shake</a></li>
+            <li><a href="#modulaterainbow">modulateRainbow</a></li>
+            <li><a href="#beam">beam</a></li>
+            <li><a href="#crystal">crystal</a></li>
+            <li><a href="#fisheye">fisheye</a></li>
+            <li><a href="#echo">echo</a></li>
+            <li><a href="#chorus">chorus</a></li>
+            <li><a href="#vibrato">vibrato</a></li>
+            <li>
+              <a href="#ringmodulator"
+                >ringModulator, ringModulate, modulateRingModulator</a
+              >
+            </li>
+            <li><a href="#sine">sine</a></li>
+            <li><a href="#saw">saw</a></li>
+            <li><a href="#triangle">triangle</a></li>
+            <li><a href="#pulse">pulse</a></li>
+            <li><a href="#square">square</a></li>
+            <li><a href="#sand">sand</a></li>
+            <li><a href="#chaos">chaos</a></li>
+            <li>
+              <a href="#lissajouslaser">lissajous, laser, lissajouslaser</a>
+            </li>
+            <li><a href="#sphere">sphere</a></li>
+            <li><a href="#flower">flower</a></li>
+            <li><a href="#oil">oil</a></li>
+            <li><a href="#watercolor">watercolor</a></li>
+            <li><a href="#ink">ink</a></li>
+            <li><a href="#parametriclaser">parametriclaser</a></li>
+            <li><a href="#repeatoperator">repeatoperator</a></li>
+            <li><a href="#delay">delay</a></li>
+            <li><a href="#split">split, disassemble</a></li>
+            <li><a href="#painting">painting</a></li>
+            <li><a href="#over">over</a></li>
+            <li><a href="#sketch">sketch</a></li>
+            <li><a href="#fractal">fractal</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <h1 class="title" id="title">NodeGL</h1>
+      <p>
+        It'll be convenience for
+        <a href="https://hydra.ojack.xyz">hydra</a> used by Node.js.
+      </p>
+      <img
+        src="https://cdn.glitch.me/project-avatar/efd0d1ad-4977-47ea-a2d9-9ce05d4c70fa.png?2023-02-10T14:36:52.526Z"
+      />
+      <br />
+      <ul>
+        <h1 id="usage">Usage</h1>
+      </ul>
+      <h3 id="first">First, please use the following code to read on hydra.</h3>
+      <div class="ready">await loadScript("<a href="https://nodegl.glitch.me/function-list.js"
+        >https://nodegl.glitch.me/function-list.js</a
+        >");</div>
+      <ol>
+        <li>
+          <h5>When you'd like to change the canvas axis to "y" perspective.</h5>
+        </li>
+        <ul>
+          <li>
+            <div class="codeblock" id="y">
+              <code>osc()
+.scale(glslAxis("y"))
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <div class="codeblock" id="2y">
+              <code>voronoi(20, 1, 5)
+.scale(glslAxis("2y"))
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+        </ul>
+        <li>
+          <h5>
+            It can be modulated using the difference between "solid" and
+            "gradient" color changes.
+          </h5>
+        </li>
+        <ul>
+          <li>
+            <div class="codeblock" id="flash">
+              <code>speed = 1 / 4;
+flash(1, 2, 1)
+.diff(osc(30, 1 / 8, 300)
+.diff(osc(30, 1 / 8, 300)
+.rotate(Math.PI / 2)))
+.scale([1 / 4, 1 / 2].smooth())
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+        </ul>
+        <li>
+          <h5>
+            You can also use functions that store trigonometric and inverse
+            trigonometric functions to change the video.
+          </h5>
+        </li>
+        <ul>
+          <li>
+            <div class="codeblock" id="list">
+              <code>noise()
+.rotate(() => list(1, 2))
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+        </ul>
+        <li>
+          <h5>
+            The options available within hydra's "ease" function can also be
+            easily specified.
+          </h5>
+        </li>
+        <ul>
+          <li>
+            <div class="codeblock" id="easeinout">
+              <code>gradient(1)
+.hue([0, 1].ease(easeInOut(5)))
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+        </ul>
+        <li>
+          <h5>
+            Variables can be defined sequentially and the last variable among
+            them can be used. (It can also be used outside of hydra.)
+          </h5>
+        </li>
+        <ul>
+          <li>
+            <div class="codeblock" id="vardef">
+              <code>osc()
+.rotate(varDef("hydra", Math.atan, 10))
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+        </ul>
+        <li>
+          <h5>
+            Two different functions can be entered, each increasing in a
+            different step, and the results put into an array and modulated.
+          </h5>
+        </li>
+        <ul>
+          <li>
+            <div class="codeblock" id="funcary">
+              <code
+                >shape(funcAry(4, 5, 6, 0.05, 0.1, Math.tan, Math.sin).smooth())
+.out();</code
+              >
+              <div class="placeholder"></div>
+            </div>
+          </li>
+        </ul>
+        <li>
+          <h5>
+            It can generate an array from 0 to a specified number and output a
+            random value.
+          </h5>
+        </li>
+        <ul>
+          <li>
+            <div class="codeblock" id="randary">
+              <code>shape(randAry(100, 0.1))
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+        </ul>
+        <li>
+          <h5>
+            It can generate an array from 0 to a specified number, repeatedly
+            output a random value, and store it in the array again.
+          </h5>
+        </li>
+        <ul>
+          <li>
+            <div class="codeblock" id="genary">
+              <code>shape(genAry(100, 0.1, 10).smooth())
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+        </ul>
+        <li>
+          <h5>
+            Four output videos can be looped and switched every specified number
+            of seconds at specified speeds.
+          </h5>
+        </li>
+        <ul>
+          <li>
+            <div class="codeblock" id="setloop">
+              <code
+                >setLoop(1/2,-1/4,-1/2,1/4,1000);
+osc().out();
+noise().out(o1);
+gradient(1).out(o2);
+voronoi().out(o3);</code
+              >
+              <div class="placeholder"></div>
+            </div>
+          </li>
+        </ul>
+        <li>
+          <h5>Others(form, pad, particle, rbga, hsb, rainbow and zebra)</h5>
+        </li>
+        <ul>
+          <li>
+            <div class="codeblock" id="form">
+              <code
+                >form(4, 2, 0, 1, 15, 1 / 8, 0)
+.colorama(3)
+.luma()
+.hue(() => Math.sin(time / 10), () => Math.cos(time / 10), () => Math.tan(time / 10))
+.diff(gradient(1))
+.invert()
+.scale(Math.PI)
+.repeat()
+.out();</code
+              >
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="pad">
+              <code
+                >pad(10, o0, 4, 0, 1, .99)
+.diff(osc(1, 2, 300)
+.diff(gradient(1))
+.scale(.1))
+.diff(rgba(o0, 1, 1, 1, 1))
+.diff(hsb(o0, 1, 1, 1 / 4))
+.invert()
+.out();</code
+              >
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="rainbow">
+              <code>gradient()
+.blend(rainbow(3))
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="particle">
+              <code
+                >osc(1, 2, 300)
+.diff(gradient(1))
+.scale(.1)
+.diff(particle(o0, .99))
+.invert()
+.out();</code
+              >
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="zebra">
+              <code>
+                s0.initCam();
+solid()
+.add(zebra(src(s0), 2, 4, Math.sin, 0.1))
+.out();</code
+              >
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="swirl">
+              <code>osc()
+.swirl()
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="modulateglitch">
+              <code>noise()
+.modulateGlitch(osc(), 0.05)
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="modulatewarp">
+              <code>osc()
+.modulateWarp(solid(), 0.3)
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="polar">
+              <code>osc()
+.polar()
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="modulatespiral">
+              <code>osc()
+.modulateSpiral(solid(), 5)
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="modulateshear">
+              <code>osc()
+.modulateShear(solid(), 0.2)
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="modulaterandomnoise">
+              <code>noise()
+.modulateRandomNoise(osc(), 1)
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="visual">
+              <code>visual()
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="huecircle">
+              <code>huecircle()
+.rotate(1, 1)
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="lightning">
+              <code>lightning(10)
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="shake">
+              <code>osc().shake().out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="modulaterainbow">
+              <code>osc()
+.modulateRainbow(o0)
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="beam">
+              <code>beam()
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="crystal">
+              <code>osc()
+.crystal()
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="fisheye">
+              <code>osc()
+.fisheye()
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="echo">
+              <code>osc()
+.echo()
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="chorus">
+              <code>osc()
+.chorus()
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="vibrato">
+              <code>osc()
+.vibrato()
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="ringmodulator">
+              <code
+                >ringModulator()
+.ringModulate()
+.modulateRingModulator(o0)
+.out();</code
+              >
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="sine">
+              <code>shape(2, .01)
+.modulate(sine())
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="saw">
+              <code>shape(2, .01)
+.modulate(saw())
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="triangle">
+              <code>shape(2, .01)
+.modulate(triangle())
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="pulse">
+              <code>shape(2, .01)
+.modulate(pulse())
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="square">
+              <code>shape(2, .01)
+.modulate(square())
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="sand">
+              <code>shape(2, .01)
+.modulate(sand())
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="chaos">
+              <code>chaos(8)
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="lissajouslaser">
+              <code>lissajous()
+.laser()
+.blend(lissajouslaser())
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="sphere">
+              <code>sphere()
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="flower">
+              <code>flower()
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="oil">
+              <code>s0.initCam();
+src(s0)
+.oil()
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="watercolor">
+              <code>s0.initCam();
+src(s0)
+.watercolor()
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="ink">
+              <code>s0.initCam();
+src(s0)
+.ink()
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="parametriclaser">
+              <code
+                >parametriclaser("cos(time)-0.5*cos(2.0*time)", "sin(time)-0.5*sin(2.0*time)", 100, 0.5, "sin(time)", "cos(time)*sin(time)", "cos(time)")
+.scale(0.5)
+.add(o0)
+.out();</code
+              >
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="repeatoperator">
+              <code
+                >src(o0)
+.shift("cos(st.x/time)", "sin(st.y/time)", "sin(st.y/time)/cos(st.x/time)")
+.hue("sin(st.x/time)+cos(st.y/time)")
+.saturate("sin(st.y/time)-cos(st.x/time)")
+.brightness("cos(st.y/time)*sin(st.x/time)")
+.contrast("sin(st.y/time)+cos(st.x/time)")
+.layer(repeatoperator("modulateKaleid", () => osc(1).rotate(Math.PI / 2).scale(1.01), 2, osc(1))
+.sub(repeatoperator("modulateRotate", () => osc(1).rotate(Math.PI / 2).scale(1.01), 3, osc(1))
+.mult(repeatoperator("modulatePixelate", () => osc(1).rotate(Math.PI / 2).scale(1.01), 5, osc(1))
+.mask(repeatoperator("modulateScale", () =>osc(1).rotate(Math.PI / 2).scale(1.01), 8, osc(1))))))
+.out();</code
+              >
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="delay">
+              <code
+                >delay(solid(), noise()
+.diff(voronoi()), 10000, o0)
+.out();</code
+              >
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="split">
+              <code
+                >s0.initCam();
+synth = () => src(s0);
+synth()
+.disassemble()
+.out(o0);
+synth()
+.pixelate(() => Math.cos(time / 10) * window.innerWidth, () => Math.sin(time / 10) * window.innerHeight)
+.out(o1);
+synth()
+.split()
+.out(o2);
+synth()
+.diff(src(o3)
+.hue("cos(st.x+time)/sin(st.y+time)"))
+.out(o3);
+render();</code
+              >
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="painting">
+              <code
+                >s0.initCam();
+src(s0)
+.painting(6.0, 0.2, 0.8, 0.4, 0.6, 2.0, 0.4, 0.4, 1.0, 1.5, 0.3, 0.2, 0.6, 0.3)
+.out();</code
+              >
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="over">
+              <code>s0.initCam();
+src(s0)
+.over(2, 0, 50, 0)
+.blend(s0)
+.out();</code>
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="sketch">
+              <code
+                >s0.initCam();
+src(s0)
+.sketch(1, 1 / 100, 1 / 4, 1 / 4)
+.blend(s0)
+.blend(o0, 7 / 10)
+.out();</code
+              >
+              <div class="placeholder"></div>
+            </div>
+          </li>
+          <li>
+            <div class="codeblock" id="fractal">
+              <code
+                >fractal([1 / 8, 1 / 4].smooth(), [0, 1].reverse()
+.ease('easeInOutHalf')
+.smooth(1 / 3)
+.fit(1 / 4)
+.offset(1 / 5)
+.fast(1 / 6), [0, 1].reverse()
+.ease('easeInOutCubic')
+.smooth(1 / 4)
+.fit(1 / 5)
+.offset(1 / 6)
+.fast(1 / 7), () => Math.tan(time / 10), Math.PI * 200, 10000)
+.mult(osc(1, 2, 300)
+.diff(gradient(1))
+.diff(solid([0, 1].smooth(), [0, 1].smooth()
+.fast(1 / 2), [0, 1].smooth()
+.fast(1 / 4), [0, 1].smooth()
+.fast(1 / 8)))
+.hue())
+.add(o0, [0, 1].smooth()
+.fast(1 / 16))
+.out();</code
+              >
+              <div class="placeholder"></div>
+            </div>
+          </li>
+        </ul>
+      </ol>
+      <br />
+      <p id="info">
+        Click <a href="https://nodegl.glitch.me/function-list.js">here</a> for
+        more information.
+      </p>
+      <p>
+        I appreciate all hydra users or developers on
+        <a href="https://github.com/hydra-synth">GitHub</a>,
+        <a href="https://www.facebook.com/groups/1084288351771117/">FB</a>,
+        <a href="https://twitter.com/hydra_patterns">Twitter</a> or
+        <a href="https://discord.gg/Mv9kXwtwVH">Discord</a>, etc...
+      </p>
+      <p>
+        By Hirotoshi Uchida<br /><a
+          href="https://hirotoshiuchida.glitch.me/"
+          >hearthis.at</a
+        ><br /><a href="https://www.instagram.com/hirotoshiuchida/">IG</a>
+      </p>
+      <h1 id="log">Log</h1>
+      <h2>First commited as "NodeBook"</h2>
+      <p>on Jan 19th, 2023.</p>
+      <h2>Released the newest</h2>
+      <p>on Apr 29th, 2025.</p>
+      <h6>
+        <a href="https://github.com/Uchida16104/NodeGL/commits/main/README.md"
+          >Show more</a
+        >
+      </h6>
+    </div>
+    <script src="./script.js"></script>
+    <script src="./function-list.js"></script>
+  </body>
+</html>

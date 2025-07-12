@@ -1,0 +1,82 @@
+* {
+  scroll-behavior: smooth;
+  background: black;
+  color: cyan;
+}
+
+body, code {
+  font-family: 'Monaspace Krypton', monospace;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 200px;
+  background-color: #f1f1f1;
+  padding: 10px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  font-size: 10px;
+  color: #0b0b0b;
+  overflow-y: auto;
+}
+
+.sidebar:hover {
+  background-color: #0b0b0b;
+  font-size: 20px;
+  color: #f4f4f4;
+}
+
+.accordion {
+  width: 100%;
+}
+
+.accordion-header {
+  background-color: #007bff;
+  color: white;
+  padding: 15px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.accordion-content {
+  display: none;
+  padding: 5px;
+  background-color: white;
+}
+
+.accordion-content ul {
+  display: block;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.accordion-content li {
+  margin-bottom: 10px;
+}
+
+.accordion-content ul > li:hover {
+  background-color: #0b0b0b;
+  font-size: 20px;
+  color: #f4f4f4;
+}
+
+.accordion-content a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.accordion-content a:hover {
+  text-decoration: underline;
+}
+
+.content {
+  margin-left: 220px;
+  padding: 20px;
+}
