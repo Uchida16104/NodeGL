@@ -9,6 +9,12 @@ permissions:
   contents: write
   packages: write
 
+env:
+  PACKAGE_NAME: NodeGL
+  DESCRIPTION: "It'll be convenience for hydra used by Node.js."
+  MAIN: index.cjs
+  LICENSE: MIT
+
 jobs:
   setup:
     runs-on: ubuntu-latest
@@ -20,46 +26,54 @@ jobs:
         run: |
           echo "version=${GITHUB_REF##*/}" >> $GITHUB_OUTPUT
           echo "version_nov=${GITHUB_REF##*/v}" >> $GITHUB_OUTPUT
-          
+
   publish_npm:
     needs: setup
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Create dummy package.json (if not present)
+
+      - name: Set version env
+        run: echo "VERSION=${{ needs.setup.outputs.version_nov }}" >> $GITHUB_ENV
+
+      - name: Create package.json dynamically
         run: |
           if [ ! -f package.json ]; then
             echo '{
-              "name": "NodeGL",
-              "version": "${{ needs.setup.outputs.version_nov }}",
-              "description": "Generative graphical music score tool",
-              "main": "index.cjs",
-              "license": "MIT",
+              "name": "'"${PACKAGE_NAME}"'",
+              "version": "'"${VERSION}"'",
+              "description": "'"${DESCRIPTION}"'",
+              "main": "'"${MAIN}"'",
+              "license": "'"${LICENSE}"'",
               "publishConfig": {
                 "registry": "https://registry.npmjs.org/"
               },
               "scripts": {
-                "start": "node index.cjs"
+                "start": "node '"${MAIN}"'"
               }
             }' > package.json
-            echo 'console.log("NodeGL CLI Placeholder");' > index.cjs
+            echo 'console.log("NodeGL CLI Placeholder");' > ${MAIN}
           fi
+
       - name: Publish to npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
-          npm publish --access public || echo "No valid npm package to publish. Skipping."
+          npm pkg fix || true
+          npm publish --access public || echo "⚠️ No valid npm package to publish. Skipping."
+
   finalize_release:
-    needs: [publish_npm]
+    needs: publish_npm
     runs-on: ubuntu-latest
     steps:
-      - name: Final release
+      - name: Finalize GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ needs.setup.outputs.version }}
           name: "NodeGL ${{ needs.setup.outputs.version }}"
           body: |
-            ✅ Automated multi-platform release of Node.js:
-            - 📦 npm Package (npmjs.com)
-          draft: false
+            ✅ Automated release of NodeGL
+            - 📦 npm package published
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
