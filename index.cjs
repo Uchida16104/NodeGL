@@ -954,3 +954,663 @@ setFunction({
     return vec4(col, 1.0);
   `
 });
+setFunction({
+	name: 'jigsawPauseShift',
+	type: 'combineCoord',
+	inputs: [{
+			type: 'float',
+			name: 'tilesX',
+			default: 4
+		},
+		{
+			type: 'float',
+			name: 'tilesY',
+			default: 4
+		},
+		{
+			type: 'float',
+			name: 'amplitude',
+			default: 0.2
+		},
+		{
+			type: 'float',
+			name: 'pauseDuration',
+			default: 1.0
+		},
+		{
+			type: 'float',
+			name: 'speed',
+			default: 0.1
+		}
+	],
+	glsl: `
+    vec2 st = _st;
+    vec2 tile = floor(st * vec2(tilesX, tilesY));
+    vec2 tileSize = vec2(1.0 / tilesX, 1.0 / tilesY);
+    float seedX = fract(sin(dot(tile, vec2(12.9898,78.233))) * 43758.5453);
+    float seedY = fract(sin(dot(tile, vec2(93.9898,67.345))) * 43758.5453);
+    vec2 randDir = vec2(seedX*2.0-1.0, seedY*2.0-1.0);
+    float phase = fract((time + (tile.x + tile.y)) / pauseDuration);
+    float active = step(phase, 0.5);
+    vec2 offset = randDir * amplitude * active;
+    float t = clamp(1.0 - (time * speed), 0.0, 1.0);
+    st += offset * t;
+    return st;
+  `
+});
+setFunction({
+	name: 'gestalt',
+	type: 'combineCoord',
+	inputs: [{
+			type: 'float',
+			name: 'multiple',
+			default: 1.0
+		},
+		{
+			type: 'float',
+			name: 'offset',
+			default: 1.0
+		},
+		{
+			type: 'float',
+			name: 'rotateMultiple',
+			default: 1.0
+		},
+		{
+			type: 'float',
+			name: 'rotateOffset',
+			default: 0.0
+		},
+		{
+			type: 'float',
+			name: 'tilesX',
+			default: 6.0
+		},
+		{
+			type: 'float',
+			name: 'tilesY',
+			default: 6.0
+		},
+		{
+			type: 'float',
+			name: 'jitter',
+			default: 0.12
+		},
+		{
+			type: 'float',
+			name: 'warp',
+			default: 0.30
+		},
+		{
+			type: 'float',
+			name: 'phaseSpeed',
+			default: 0.6
+		},
+		{
+			type: 'float',
+			name: 'pauseDuration',
+			default: 1.0
+		}
+	],
+	glsl: `
+    vec2 st = _st - vec2(0.5);
+
+    float safeTilesX = max(1.0, tilesX);
+    float safeTilesY = max(1.0, tilesY);
+    float safePause = max(0.0001, pauseDuration);
+    float safeMultiple = max(0.0001, multiple);
+    float safeOffset = max(0.0001, offset);
+
+    float angle = rotateOffset + (_c0.z * rotateMultiple) + sin(time * max(0.0001, phaseSpeed)) * 0.5;
+    mat2 R = mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
+    st = R * st;
+
+    vec2 scale = vec2(safeOffset + safeMultiple * _c0.r, safeOffset + safeMultiple * _c0.g);
+
+    vec2 uv = st + vec2(0.5);
+    vec2 tilePos = floor(uv * vec2(safeTilesX, safeTilesY));
+    vec2 tileFrac = fract(uv * vec2(safeTilesX, safeTilesY)) - vec2(0.5);
+
+    float seed1 = fract(sin(dot(tilePos , vec2(12.9898,78.233))) * 43758.5453);
+    float seed2 = fract(sin(dot(tilePos , vec2(93.9898,67.345))) * 24634.6345);
+    vec2 randDir = vec2(seed1 * 2.0 - 1.0, seed2 * 2.0 - 1.0);
+
+    float phase = fract((time + (tilePos.x + tilePos.y)) / safePause);
+    float hold = step(phase, 0.5); // 1.0 when in hold, else 0.0
+
+    vec2 jitterOff = randDir * jitter * hold;
+
+    float lumin = dot(_c0.rgb, vec3(0.2126, 0.7152, 0.0722));
+    float localWarp = (lumin * 2.0 - 1.0); // -1 .. 1
+
+    st += jitterOff + tileFrac * warp * localWarp;
+
+    st = st / scale;
+
+    st += vec2(0.5);
+    st = fract(st);
+
+    float mx = mod(tilePos.x, 2.0);
+    float my = mod(tilePos.y, 2.0);
+    if (mx > 0.5) st.x = 1.0 - st.x;
+    if (my > 0.5) st.y = 1.0 - st.y;
+
+    return st;
+  `
+});
+setFunction({
+  name: 'chaosDistort',
+  type: 'combineCoord',
+  inputs: [
+    {
+      type: 'float',
+      name: 'fadeAmount',
+      default: 0.3
+    },
+    {
+      type: 'float',
+      name: 'distortStrength',
+      default: 0.5
+    },
+    {
+      type: 'float',
+      name: 'chromaShift',
+      default: 0.02
+    },
+    {
+      type: 'float',
+      name: 'decayRate',
+      default: 0.8
+    },
+    {
+      type: 'float',
+      name: 'glitchIntensity',
+      default: 0.4
+    },
+    {
+      type: 'float',
+      name: 'illusionSpeed',
+      default: 1.0
+    }
+  ],
+  glsl: `
+    vec2 st = _st;
+    vec2 center = vec2(0.5);
+    vec2 toCenter = st - center;
+    float dist = length(toCenter);
+    float angle = atan(toCenter.y, toCenter.x);
+    
+    float t = time * illusionSpeed;
+    float glitchTrigger = step(0.97, fract(sin(floor(t * 10.0) * 43758.5453)));
+    
+    float blockY = floor(st.y * 20.0);
+    float blockSeed = fract(sin(blockY * 78.233 + floor(t)) * 43758.5453);
+    float horizontalShift = (blockSeed - 0.5) * glitchIntensity * glitchTrigger;
+    st.x += horizontalShift;
+    
+    float noise1 = fract(sin(dot(st * 10.0 + t, vec2(12.9898, 78.233))) * 43758.5453);
+    float noise2 = fract(sin(dot(st * 15.0 - t * 0.5, vec2(93.9898, 67.345))) * 43758.5453);
+    
+    vec2 waveDistort = vec2(
+      sin(st.y * 10.0 + t * 2.0) * distortStrength * 0.05,
+      cos(st.x * 10.0 + t * 1.5) * distortStrength * 0.05
+    );
+    st += waveDistort;
+    
+    float spiralAngle = angle + dist * 5.0 + t;
+    vec2 spiralOffset = vec2(
+      cos(spiralAngle) * dist * distortStrength * 0.1,
+      sin(spiralAngle) * dist * distortStrength * 0.1
+    );
+    st += spiralOffset;
+    
+    float turbulence = (noise1 - 0.5) * distortStrength * 0.1;
+    st += vec2(turbulence, turbulence * 0.7);
+    
+    float pixelDecay = pow(decayRate, t * 0.5);
+    float decayNoise = fract(sin(dot(floor(st * 50.0), vec2(12.9898, 78.233))) * 43758.5453);
+    float decayMask = step(pixelDecay, decayNoise);
+    st = mix(st, center + (st - center) * 0.9, decayMask * 0.3);
+    
+    float chromaAngle = t * 2.0;
+    vec2 rgShift = vec2(cos(chromaAngle), sin(chromaAngle)) * chromaShift;
+    vec2 baShift = vec2(cos(chromaAngle + 2.094), sin(chromaAngle + 2.094)) * chromaShift;
+    
+    float colorShift = _c0.r * 0.299 + _c0.g * 0.587 + _c0.b * 0.114;
+    st += rgShift * colorShift;
+    
+    float scanline = sin(st.y * 200.0 + t * 5.0) * 0.5 + 0.5;
+    float scanlineGlitch = mix(1.0, scanline, glitchIntensity * 0.3);
+    
+    vec2 uvR = st + rgShift;
+    vec2 uvB = st - baShift;
+    
+    float moirePattern = sin(st.x * 100.0 + t) * sin(st.y * 100.0 - t);
+    st += vec2(moirePattern * 0.002);
+    
+    float kaleidoSeg = 6.0;
+    float kaleidoAngle = mod(atan(toCenter.y, toCenter.x), 6.28318 / kaleidoSeg);
+    if(mod(floor(atan(toCenter.y, toCenter.x) / (6.28318 / kaleidoSeg)), 2.0) > 0.5) {
+      kaleidoAngle = (6.28318 / kaleidoSeg) - kaleidoAngle;
+    }
+    vec2 kaleidoOffset = vec2(cos(kaleidoAngle), sin(kaleidoAngle)) * dist * illusionSpeed * 0.05;
+    st += kaleidoOffset * sin(t);
+    
+    float feedback = fract(sin(dot(st, vec2(12.9898, 78.233)) + t) * 43758.5453);
+    st = mix(st, st + (feedback - 0.5) * 0.02, glitchIntensity);
+    
+    st = clamp(st, vec2(0.0), vec2(1.0));
+    
+    return st;
+  `
+});
+setFunction({
+  name: 'physicalGlitchIllusion',
+  type: 'combineCoord',
+  inputs: [
+    {
+      type: 'float',
+      name: 'displacementIntensity',
+      default: 0.3
+    },
+    {
+      type: 'float',
+      name: 'glitchFrequency',
+      default: 2.0
+    },
+    {
+      type: 'float',
+      name: 'glitchAmount',
+      default: 0.15
+    },
+    {
+      type: 'float',
+      name: 'rotationSpeed',
+      default: 0.1
+    },
+    {
+      type: 'float',
+      name: 'scaleOscillation',
+      default: 0.2
+    },
+    {
+      type: 'float',
+      name: 'chromaticAberration',
+      default: 0.02
+    },
+    {
+      type: 'float',
+      name: 'warpIntensity',
+      default: 0.5
+    }
+  ],
+  glsl: `
+    vec2 st = _st;
+    vec2 center = vec2(0.5);
+    
+    float glitchTrigger = step(0.95, fract(sin(floor(time * glitchFrequency) * 12.9898) * 43758.5453));
+    float glitchLine = floor(st.y * 20.0 + time * 5.0);
+    float glitchOffset = fract(sin(glitchLine * 78.233) * 43758.5453) * 2.0 - 1.0;
+    st.x += glitchOffset * glitchAmount * glitchTrigger;
+    
+    float displacementAngle = _c0.r * 6.28318;
+    float displacementRadius = _c0.g * displacementIntensity;
+    vec2 displacement = vec2(cos(displacementAngle), sin(displacementAngle)) * displacementRadius;
+    st += displacement;
+    
+    vec2 centered = st - center;
+    float angle = time * rotationSpeed + _c0.b * 3.14159;
+    mat2 rotation = mat2(cos(angle), -sin(angle), sin(angle), cos(angle));
+    centered = rotation * centered;
+    
+    float scaleWave = 1.0 + sin(time * 2.0 + _c0.r * 6.28318) * scaleOscillation;
+    centered *= scaleWave;
+    
+    float warpPhase = time * 0.5;
+    float warpX = sin(centered.y * 10.0 + warpPhase) * warpIntensity * _c0.g;
+    float warpY = cos(centered.x * 10.0 + warpPhase) * warpIntensity * _c0.b;
+    centered += vec2(warpX, warpY) * 0.1;
+    
+    st = centered + center;
+    
+    float pixelBreak = step(0.98, fract(sin(dot(floor(st * 50.0), vec2(12.9898, 78.233))) * 43758.5453));
+    st += vec2(pixelBreak * 0.1);
+    
+    return st;
+  `
+});
+setFunction({
+  name: 'collapseGlitchIllusion',
+  type: 'combineCoord',
+  inputs: [
+    { type: 'float', name: 'tiles', default: 6 },
+    { type: 'float', name: 'rotateAmp', default: 2.0 },
+    { type: 'float', name: 'scaleAmp', default: 1.2 },
+    { type: 'float', name: 'pauseRate', default: 0.5 },
+    { type: 'float', name: 'glitchAmp', default: 0.08 }
+  ],
+  glsl: `
+    vec2 st = _st;
+
+    /* --- tile split --- */
+    vec2 grid = vec2(tiles);
+    vec2 tile = floor(st * grid);
+    vec2 tileUV = fract(st * grid);
+
+    /* --- stable random per tile --- */
+    float rnd = fract(
+      sin(dot(tile, vec2(127.1, 311.7))) * 43758.5453
+    );
+
+    /* --- pause illusion (time quantization) --- */
+    float t = floor(time * pauseRate) / pauseRate;
+
+    /* --- safe noise input --- */
+    vec3 n = clamp(_c0.rgb, 0.0, 1.0);
+
+    /* --- rotation --- */
+    float angle = (rnd - 0.5) * rotateAmp
+                + n.r * rotateAmp * sin(t);
+
+    mat2 rot = mat2(
+      cos(angle), -sin(angle),
+      sin(angle),  cos(angle)
+    );
+
+    /* --- scale collapse --- */
+    float scale = 1.0 / max(
+      1.0 + (n.g - 0.5) * scaleAmp,
+      0.0001
+    );
+
+    /* --- glitch offset --- */
+    vec2 glitch = vec2(
+      (n.r - 0.5),
+      (n.b - 0.5)
+    ) * glitchAmp * step(0.6, rnd);
+
+    /* --- apply transform --- */
+    tileUV -= 0.5;
+    tileUV = rot * tileUV;
+    tileUV *= scale;
+    tileUV += 0.5 + glitch;
+
+    /* --- reassemble --- */
+    st = (tile + tileUV) / grid;
+
+    return st;
+  `
+});
+setFunction({
+  name: 'totalVisualChaos',
+  type: 'combineCoord',
+  inputs: [
+    { type: 'float', name: 'tiles', default: 8 },
+    { type: 'float', name: 'glitchIntensity', default: 0.3 },
+    { type: 'float', name: 'distortAmount', default: 0.15 },
+    { type: 'float', name: 'chromaShift', default: 0.02 },
+    { type: 'float', name: 'fadeAmount', default: 0.5 },
+    { type: 'float', name: 'speed', default: 0.2 }
+  ],
+  glsl: `
+    vec2 st = _st;
+    vec2 center = vec2(0.5);
+    
+    vec2 tile = floor(st * tiles);
+    float tileHash = fract(sin(dot(tile, vec2(12.9898, 78.233))) * 43758.5453);
+    float timeHash = fract(time * speed + tileHash * 10.0);
+    
+    float glitchTrigger = step(0.95, fract(timeHash * 3.0));
+    vec2 glitchOffset = vec2(
+      (fract(sin(tile.x * 127.1) * 43758.5) - 0.5) * glitchIntensity * glitchTrigger,
+      (fract(sin(tile.y * 269.5) * 43758.5) - 0.5) * glitchIntensity * glitchTrigger
+    );
+    
+    float angle = sin(time * speed + tileHash * 6.28) * distortAmount;
+    float dist = length(st - center);
+    vec2 distortOffset = (st - center) * sin(dist * 10.0 - time * speed) * distortAmount;
+    
+    float swapTrigger = step(0.8, tileHash + sin(time * speed * 2.0) * 0.3);
+    vec2 swapTile = tile + vec2(
+      floor((fract(sin(tile.y * 93.9) * 43758.5) - 0.5) * 2.0),
+      floor((fract(sin(tile.x * 67.3) * 43758.5) - 0.5) * 2.0)
+    ) * swapTrigger;
+    vec2 tilePos = fract(st * tiles);
+    st = (swapTile + tilePos) / tiles;
+    
+    st += glitchOffset + distortOffset;
+    
+    float decay = 1.0 - fadeAmount * (1.0 - cos(time * speed)) * 0.5;
+    st = mix(st, center, (1.0 - decay) * 0.3);
+    
+    vec2 chromaDir = normalize(st - center);
+    st += chromaDir * chromaShift * sin(time * speed + dist * 5.0);
+    
+    float breakdown = step(0.98, fract(tileHash + time * speed * 0.5));
+    st += vec2(
+      (fract(sin(time * 91.3) * 43758.5) - 0.5) * breakdown * 0.5,
+      (fract(sin(time * 71.7) * 43758.5) - 0.5) * breakdown * 0.5
+    );
+    
+    return st;
+  `
+});
+setFunction({
+  name: 'totalDestruction',
+  type: 'combineCoord',
+  inputs: [
+    {
+      type: 'float',
+      name: 'glitchIntensity',
+      default: 0.5
+    },
+    {
+      type: 'float',
+      name: 'colorShift',
+      default: 0.3
+    },
+    {
+      type: 'float',
+      name: 'distortAmount',
+      default: 0.2
+    },
+    {
+      type: 'float',
+      name: 'fadeLevel',
+      default: 0.3
+    },
+    {
+      type: 'float',
+      name: 'tilesX',
+      default: 8
+    },
+    {
+      type: 'float',
+      name: 'tilesY',
+      default: 8
+    },
+    {
+      type: 'float',
+      name: 'speed',
+      default: 0.5
+    }
+  ],
+  glsl: `
+    vec2 st = _st;
+    vec2 originalSt = st;
+    
+    float t = time * speed;
+    
+    vec2 tile = floor(st * vec2(tilesX, tilesY));
+    float tileHash = fract(sin(dot(tile, vec2(12.9898, 78.233))) * 43758.5453);
+    float tileHash2 = fract(sin(dot(tile, vec2(93.9898, 67.345))) * 43758.5453);
+    
+    float glitchTrigger = step(0.95, fract(tileHash + t * 0.1));
+    vec2 glitchOffset = vec2(
+      fract(sin(t * 10.0 + tileHash * 100.0)) * 2.0 - 1.0,
+      fract(cos(t * 10.0 + tileHash2 * 100.0)) * 2.0 - 1.0
+    ) * glitchIntensity * glitchTrigger;
+    
+    st += glitchOffset;
+    
+    float distortPhase = t + tileHash * 6.28318;
+    vec2 center = st - vec2(0.5);
+    float dist = length(center);
+    float angle = atan(center.y, center.x);
+    
+    angle += sin(distortPhase) * distortAmount * (1.0 + tileHash);
+    dist += sin(distortPhase * 2.0 + tileHash * 10.0) * distortAmount * 0.1;
+    
+    st = vec2(cos(angle), sin(angle)) * dist + vec2(0.5);
+    
+    float swapTrigger = step(0.8, fract(tileHash2 * 2.0 + t * 0.05));
+    vec2 tileSize = vec2(1.0 / tilesX, 1.0 / tilesY);
+    vec2 tileCenter = (tile + vec2(0.5)) * tileSize;
+    vec2 targetTile = floor(vec2(
+      fract(tileHash * 7.0) * tilesX,
+      fract(tileHash2 * 7.0) * tilesY
+    ));
+    vec2 targetCenter = (targetTile + vec2(0.5)) * tileSize;
+    
+    vec2 localPos = fract(st * vec2(tilesX, tilesY));
+    st = mix(st, targetCenter + (localPos - vec2(0.5)) * tileSize, swapTrigger);
+    
+    float wavePhase = t + st.x * 10.0 + st.y * 10.0;
+    st.x += sin(wavePhase * 3.0) * colorShift * 0.05;
+    st.y += cos(wavePhase * 3.0) * colorShift * 0.05;
+    
+    float breakPattern = step(0.9, fract(sin(dot(floor(st * 50.0), vec2(12.9898, 78.233))) * 43758.5453 + t * 0.1));
+    st += (vec2(
+      fract(sin(st.x * 100.0 + t)),
+      fract(cos(st.y * 100.0 + t))
+    ) - vec2(0.5)) * fadeLevel * breakPattern;
+    
+    float illusionPhase = sin(t + st.x * 6.28318) * cos(t * 0.7 + st.y * 6.28318);
+    st += vec2(sin(illusionPhase * 5.0), cos(illusionPhase * 5.0)) * 0.02 * fadeLevel;
+    
+    return st;
+  `
+});
+setFunction({
+  name: 'complexGlitchFX',
+  type: 'combineCoord',
+  inputs: [
+    {
+      type: 'float',
+      name: 'intensity',
+      default: 1.0
+    },
+    {
+      type: 'float',
+      name: 'speed',
+      default: 0.5
+    },
+    {
+      type: 'float',
+      name: 'tilesX',
+      default: 8
+    },
+    {
+      type: 'float',
+      name: 'tilesY',
+      default: 8
+    },
+    {
+      type: 'float',
+      name: 'chromaShift',
+      default: 0.02
+    },
+    {
+      type: 'float',
+      name: 'distortAmount',
+      default: 0.3
+    },
+    {
+      type: 'float',
+      name: 'glitchFreq',
+      default: 5.0
+    },
+    {
+      type: 'float',
+      name: 'rotationSpeed',
+      default: 0.1
+    }
+  ],
+  glsl: `
+    vec2 st = _st;
+    vec2 center = vec2(0.5);
+    
+    float t = time * speed;
+    
+    vec2 tile = floor(st * vec2(tilesX, tilesY));
+    vec2 tileUV = fract(st * vec2(tilesX, tilesY));
+    
+    float hash1 = fract(sin(dot(tile, vec2(12.9898, 78.233))) * 43758.5453);
+    float hash2 = fract(sin(dot(tile, vec2(39.3467, 11.135))) * 22578.1459);
+    float hash3 = fract(sin(dot(tile, vec2(73.1264, 94.673))) * 31415.9265);
+    
+    float glitchTrigger = step(0.95, fract(hash1 * 10.0 + t * glitchFreq));
+    
+    vec2 randomOffset = vec2(
+      hash2 * 2.0 - 1.0,
+      hash3 * 2.0 - 1.0
+    ) * glitchTrigger * intensity * 0.5;
+    
+    float scanlineGlitch = step(0.98, fract(st.y * 100.0 + t * 20.0)) * intensity;
+    randomOffset.x += scanlineGlitch * (hash1 - 0.5) * 0.3;
+    
+    vec2 toCenter = st - center;
+    float dist = length(toCenter);
+    float angle = atan(toCenter.y, toCenter.x);
+    
+    float warpAngle = angle + sin(dist * 10.0 - t * 2.0) * distortAmount * intensity;
+    float warpDist = dist + sin(angle * 3.0 + t) * 0.05 * distortAmount * intensity;
+    
+    vec2 warped = center + vec2(
+      cos(warpAngle) * warpDist,
+      sin(warpAngle) * warpDist
+    );
+    
+    float tileRotation = hash1 * 6.28318 + t * rotationSpeed;
+    vec2 tileCentered = tileUV - vec2(0.5);
+    mat2 rotMat = mat2(
+      cos(tileRotation), -sin(tileRotation),
+      sin(tileRotation), cos(tileRotation)
+    );
+    tileCentered = rotMat * tileCentered;
+    tileUV = tileCentered + vec2(0.5);
+    
+    vec2 shuffleOffset = vec2(
+      fract(hash2 * 7.0 + floor(t * 2.0)),
+      fract(hash3 * 5.0 + floor(t * 2.0))
+    );
+    shuffleOffset = (shuffleOffset - vec2(0.5)) * step(0.7, hash1) * intensity * 0.4;
+    
+    st = (tile + tileUV) / vec2(tilesX, tilesY);
+    
+    float pixelBreak = step(0.9, hash1 + sin(t * 10.0) * 0.1);
+    st += vec2(
+      sin(st.y * 50.0 + t * 15.0) * pixelBreak,
+      cos(st.x * 50.0 + t * 15.0) * pixelBreak
+    ) * intensity * 0.05;
+    
+    st = mix(st, warped, 0.3 * intensity);
+    st += randomOffset;
+    st += shuffleOffset;
+    
+    float chromaWave = sin(t * 3.0 + st.x * 10.0) * chromaShift * intensity;
+    st.x += chromaWave;
+    
+    vec2 kaleidoST = st - center;
+    float ka = atan(kaleidoST.y, kaleidoST.x);
+    float kr = length(kaleidoST);
+    ka = mod(ka, 3.14159 / 3.0);
+    kaleidoST = vec2(cos(ka), sin(ka)) * kr + center;
+    st = mix(st, kaleidoST, 0.2 * intensity * step(0.5, fract(t * 0.3)));
+    
+    float decay = 1.0 - (dist * 0.3 * intensity);
+    st = mix(st, st * decay, 0.3 * intensity);
+    
+    return st;
+  `
+});
