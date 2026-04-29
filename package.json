@@ -1,5 +1,5 @@
 {
-  "name": "@Uchida16104/hydra-nodegl",
+  "name": "@uchida16104/hydra-nodegl",
   "version": "2.3.0",
   "description": "It'll be convenience for hydra used by Node.js.",
   "main": "./index.cjs",
