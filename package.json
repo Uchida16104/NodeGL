@@ -4,7 +4,7 @@
   "description": "It'll be convenience for hydra used by Node.js.",
   "main": "./index.cjs",
   "bin": {
-    "nodegl": "./index.cjs"
+    "nodegl": "index.cjs"
   },
   "repository": {
     "type": "git",
